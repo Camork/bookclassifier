@@ -17,37 +17,37 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserMapper userMapper;
+	@Autowired
+	private UserMapper userMapper;
 
-    @Override
-    public UserBean userLogin(String userName) {
-        UserBean a=userMapper.userLogin(userName);
-        return a;
-    }
+	@Override
+	public UserBean userLogin(String userName) {
+		UserBean a = userMapper.userLogin(userName);
+		return a;
+	}
 
-    @Override
-    public boolean regUser(UserBean userBean) {
-        try {
-            int i = userMapper.regUser(userBean);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
+	@Override
+	public boolean regUser(UserBean userBean) {
+		try {
+			int i = userMapper.regUser(userBean);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
-    @Override
-    public boolean checkUserName(String userName) {
-        UserBean u = new UserBean();
-        u.setUserName(userName);
+	@Override
+	public boolean checkUserName(String userName) {
+		UserBean u = new UserBean();
+		u.setUserName(userName);
 
-        try {
-            int a = userMapper.checkUserName(u);
-        } catch (Exception e) {
-            return true;
-        }
+		try {
+			int a = userMapper.checkUserName(u);
+		} catch (Exception e) {
+			return true;
+		}
 
-        return false;
-    }
+		return false;
+	}
 }

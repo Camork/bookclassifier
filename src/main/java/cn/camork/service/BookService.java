@@ -9,14 +9,14 @@ import java.util.List;
 
 public interface BookService {
 
-    int insertBookType(BookType bookType);
+	int insertBookType(BookType bookType);
 
-    int insertBook(Book book);
+	int insertBook(Book book);
 
-    List<Book> getHotBooks();
+	List<Book> getHotBooks();
 
-    List<BookType> getBookTypes();
+	List<BookType> getBookTypes();
 
-    List<BookBean> getBooksByType(String typeName);
+	List<BookBean> getBooksByType(String typeName);
 
 }

@@ -12,29 +12,29 @@ import java.util.List;
  * Created by Camork on 2017-05-21.
  */
 public class Category implements HtmlBean {
-    private static final long serialVersionUID = 7344926081913098617L;
+	private static final long serialVersionUID = 7344926081913098617L;
 
-    @Text
-    @Attr("name")
-    @HtmlField(cssPath = "a > h2")
-    private String tagTitle;
+	@Text
+	@Attr("name")
+	@HtmlField(cssPath = "a > h2")
+	private String tagTitle;
 
-    @HtmlField(cssPath = "table tr >td")
-    private List<BookType> bookTypes;
+	@HtmlField(cssPath = "table tr >td")
+	private List<BookType> bookTypes;
 
-    public String getTagTitle() {
-        return tagTitle;
-    }
+	public String getTagTitle() {
+		return tagTitle;
+	}
 
-    public void setTagTitle(String tagTitle) {
-        this.tagTitle = tagTitle;
-    }
+	public void setTagTitle(String tagTitle) {
+		this.tagTitle = tagTitle;
+	}
 
-    public List<BookType> getBookTypes() {
-        return bookTypes;
-    }
+	public List<BookType> getBookTypes() {
+		return bookTypes;
+	}
 
-    public void setBookTypes(List<BookType> bookTypes) {
-        this.bookTypes = bookTypes;
-    }
+	public void setBookTypes(List<BookType> bookTypes) {
+		this.bookTypes = bookTypes;
+	}
 }

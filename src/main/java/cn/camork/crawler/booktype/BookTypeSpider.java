@@ -13,16 +13,16 @@ import java.util.List;
 @Gecco(matchUrl = "https://book.douban.com/tag/", pipelines = {"consolePipeline", "bookTypePipeline"})
 public class BookTypeSpider implements HtmlBean {
 
-    private static final long serialVersionUID = 4679589873307460519L;
+	private static final long serialVersionUID = 4679589873307460519L;
 
-    @HtmlField(cssPath = ".article > div:nth-child(2) > div")
-    private List<Category>  categories;
+	@HtmlField(cssPath = ".article > div:nth-child(2) > div")
+	private List<Category> categories;
 
-    public List<Category> getCategories() {
-        return categories;
-    }
+	public List<Category> getCategories() {
+		return categories;
+	}
 
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
-    }
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
+	}
 }

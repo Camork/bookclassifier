@@ -16,33 +16,33 @@ import java.util.List;
 @Transactional
 public class BookServiceImpl implements BookService {
 
-    @Autowired
-    private BookMapper bookMapper;
+	@Autowired
+	private BookMapper bookMapper;
 
-    @Override
-    public int insertBookType(BookType bookType) {
-        return bookMapper.insertBookType(bookType);
-    }
+	@Override
+	public int insertBookType(BookType bookType) {
+		return bookMapper.insertBookType(bookType);
+	}
 
-    @Override
-    public int insertBook(Book book) {
-        return bookMapper.insertBook(book);
-    }
+	@Override
+	public int insertBook(Book book) {
+		return bookMapper.insertBook(book);
+	}
 
-    @Override
-    public List<Book> getHotBooks() {
-        return bookMapper.getHotBooks();
-    }
+	@Override
+	public List<Book> getHotBooks() {
+		return bookMapper.getHotBooks();
+	}
 
-    @Override
-    public List<BookType> getBookTypes() {
-        return bookMapper.getBookTypes();
-    }
+	@Override
+	public List<BookType> getBookTypes() {
+		return bookMapper.getBookTypes();
+	}
 
-    @Override
-    public List<BookBean> getBooksByType(String typeName) {
-        return bookMapper.getBooksByType(typeName);
-    }
+	@Override
+	public List<BookBean> getBooksByType(String typeName) {
+		return bookMapper.getBooksByType(typeName);
+	}
 
 
 }

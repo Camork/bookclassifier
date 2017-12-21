@@ -24,54 +24,54 @@ import java.util.Map;
 @RequestMapping("/book")
 public class BookAction {
 
-    @Autowired
-    private PipelineFactory springPipelineFactory;
+	@Autowired
+	private PipelineFactory springPipelineFactory;
 
-    @Autowired
-    private BookService bookService;
+	@Autowired
+	private BookService bookService;
 
-    @RequestMapping("/category")
-    public String getCategory(Map<String, Map<String, List<BookType>>> m) {
+	@RequestMapping("/category")
+	public String getCategory(Map<String, Map<String, List<BookType>>> m) {
 
-        Map<String, List<BookType>> categories = new HashMap<>();
-        List<BookType> lists = bookService.getBookTypes();
+		Map<String, List<BookType>> categories = new HashMap<>();
+		List<BookType> lists = bookService.getBookTypes();
 
-        List<BookType> data = new ArrayList<>();
-        for (BookType bookType : lists) {
+		List<BookType> data = new ArrayList<>();
+		for (BookType bookType : lists) {
 
-            String title = bookType.getTypeTitle();
+			String title = bookType.getTypeTitle();
 
-            if (categories.get(title) == null) {
-                data = new ArrayList<>();
-                data.add(bookType);
-            } else {
-                categories.get(title).add(bookType);
-            }
-            categories.put(title, data);
+			if (categories.get(title) == null) {
+				data = new ArrayList<>();
+				data.add(bookType);
+			} else {
+				categories.get(title).add(bookType);
+			}
+			categories.put(title, data);
 
 
-        }
-        m.put("categories", categories);
-        return "page/category";
-    }
+		}
+		m.put("categories", categories);
+		return "page/category";
+	}
 
-    @RequestMapping("/type/{typeName}")
-    public String tag(@PathVariable String typeName, Map<String,List<BookBean>> m, Model model) {
-        Index.log.warn(typeName);
-        model.addAttribute("typeName",typeName);
-        if (bookService.getBooksByType(typeName).isEmpty()) {
+	@RequestMapping("/type/{typeName}")
+	public String tag(@PathVariable String typeName, Map<String, List<BookBean>> m, Model model) {
+		Index.log.warn(typeName);
+		model.addAttribute("typeName", typeName);
+		if (bookService.getBooksByType(typeName).isEmpty()) {
 
-            HttpGetRequest start = new HttpGetRequest("https://book.douban.com/tag/" + typeName);
-            GeccoEngine.create()
-                    .classpath("cn.camork.crawler")
-                    .pipelineFactory(springPipelineFactory)
-                    .start(start)
-                    .run();
-        }
+			HttpGetRequest start = new HttpGetRequest("https://book.douban.com/tag/" + typeName);
+			GeccoEngine.create()
+					.classpath("cn.camork.crawler")
+					.pipelineFactory(springPipelineFactory)
+					.start(start)
+					.run();
+		}
 
-        List<BookBean> lists=bookService.getBooksByType(typeName);
-        m.put("lists",lists);
-        return "page/typeList";
-    }
+		List<BookBean> lists = bookService.getBooksByType(typeName);
+		m.put("lists", lists);
+		return "page/typeList";
+	}
 
 }

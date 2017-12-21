@@ -12,10 +12,14 @@ import java.util.List;
  */
 public interface BookMapper {
 
-    int insertBookType(BookType bookType);
-    int insertBook(Book book);
-    List<Book> getHotBooks();
-    List<BookType> getBookTypes();
-    List<BookBean> getBooksByType(String typeName);
+	int insertBookType(BookType bookType);
+
+	int insertBook(Book book);
+
+	List<Book> getHotBooks();
+
+	List<BookType> getBookTypes();
+
+	List<BookBean> getBooksByType(String typeName);
 
 }

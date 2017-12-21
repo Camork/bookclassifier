@@ -19,44 +19,44 @@ import java.util.Set;
 @Controller
 public class ShiroRealm extends AuthorizingRealm {
 
-    @Autowired
-    private UserService userService;
+	@Autowired
+	private UserService userService;
 
-    @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+	@Override
+	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 
-        UsernamePasswordToken upToken = (UsernamePasswordToken) token;
+		UsernamePasswordToken upToken = (UsernamePasswordToken) token;
 
-        //2. 从 UsernamePasswordToken 中来获取 username
-        String username = upToken.getUsername();
+		//2. 从 UsernamePasswordToken 中来获取 username
+		String username = upToken.getUsername();
 
-        UserBean user = userService.userLogin(username);
-        if (user == null) {
-            throw new UnknownAccountException("用户不存在!");
-        }
-        String realmName = getName();
+		UserBean user = userService.userLogin(username);
+		if (user == null) {
+			throw new UnknownAccountException("用户不存在!");
+		}
+		String realmName = getName();
 
-        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user.getUserName(), user.getUserPass(), realmName);
-        return info;
-    }
+		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user.getUserName(), user.getUserPass(), realmName);
+		return info;
+	}
 
-    @Override
-    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+	@Override
+	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 
-        String principal = (String)principals.getPrimaryPrincipal();
+		String principal = (String) principals.getPrimaryPrincipal();
 
-        //2. 利用登录的用户的信息来用户当前用户的角色或权限(可能需要查询数据库)
-        int userRole=userService.userLogin(principal).getUserRole();
+		//2. 利用登录的用户的信息来用户当前用户的角色或权限(可能需要查询数据库)
+		int userRole = userService.userLogin(principal).getUserRole();
 
-        Set<String> roles = new HashSet<>();
-        roles.add("user");
-        if (userRole==1) {
-            roles.add("admin");
-        }
+		Set<String> roles = new HashSet<>();
+		roles.add("user");
+		if (userRole == 1) {
+			roles.add("admin");
+		}
 
-        //3. 创建 SimpleAuthorizationInfo, 并设置其 reles 属性.
-        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo(roles);
+		//3. 创建 SimpleAuthorizationInfo, 并设置其 reles 属性.
+		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo(roles);
 
-        return info;
-    }
+		return info;
+	}
 }

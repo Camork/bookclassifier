@@ -8,17 +8,17 @@ import java.util.List;
 
 public interface OrderMapper {
 
-    void saveOrder(Order order);
+	void saveOrder(Order order);
 
-    void saveOrderDetail(OrderDetail od);
+	void saveOrderDetail(OrderDetail od);
 
-    int getOrderId(String orderCode);
+	int getOrderId(String orderCode);
 
-    void updateOrderStatus(String orderId, int status);
+	void updateOrderStatus(String orderId, int status);
 
-    List<Order> getMyOrders(String username, String status);
+	List<Order> getMyOrders(String username, String status);
 
-    int findOrderStatusById(int parseInt);
+	int findOrderStatusById(int parseInt);
 
-    void delOrder(int orderId);
+	void delOrder(int orderId);
 }

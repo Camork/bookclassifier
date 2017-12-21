@@ -14,7 +14,7 @@ public interface OrderService {
 
 	List<Order> getMyOrders(String username, String status);
 
-    int getOrderStatusById(String orderId);
+	int getOrderStatusById(String orderId);
 
-    void delOrder(int orderId);
+	void delOrder(int orderId);
 }

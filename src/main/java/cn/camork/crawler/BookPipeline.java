@@ -17,40 +17,40 @@ import java.util.Date;
 @Service("bookPipeline")
 public class BookPipeline implements Pipeline<Book> {
 
-    private BookService bookService;
+	private BookService bookService;
 
-    @Autowired
-    public void setBookService(BookService bookService) {
-        this.bookService = bookService;
-    }
+	@Autowired
+	public void setBookService(BookService bookService) {
+		this.bookService = bookService;
+	}
 
-    @Override
-    public void process(Book bean) {
-        try {
-            String tempDate = bean.getTempDate();
-            SimpleDateFormat format = new SimpleDateFormat();
-            if (tempDate.length() == 4) {
-                format = new SimpleDateFormat("yyyy");
-            } else {
-                String[] strs = tempDate.split("-");
-                if (strs.length == 2) {
-                    format = new SimpleDateFormat("yyyy-MM");
-                } else if (strs.length == 3) {
-                    format = new SimpleDateFormat("yyyy-MM-dd");
-                }
-            }
+	@Override
+	public void process(Book bean) {
+		try {
+			String tempDate = bean.getTempDate();
+			SimpleDateFormat format = new SimpleDateFormat();
+			if (tempDate.length() == 4) {
+				format = new SimpleDateFormat("yyyy");
+			} else {
+				String[] strs = tempDate.split("-");
+				if (strs.length == 2) {
+					format = new SimpleDateFormat("yyyy-MM");
+				} else if (strs.length == 3) {
+					format = new SimpleDateFormat("yyyy-MM-dd");
+				}
+			}
 
-            bean.setPubDate(format.parse(tempDate));
-        } catch (ParseException e) {
-            bean.setPubDate(new Date());
-        }
-        bean.setBookDescribe(bean.getBookDescribe().replace("\n", "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"));
-        String tempPrice=bean.getTempPrice();
-        if(tempPrice.equals("")){
-            bean.setBookPrice(50.0f);
-        }else{
-            bean.setBookPrice(Float.parseFloat(tempPrice.replaceAll("[^.\\d]", "")));
-        }
-        bookService.insertBook(bean);
-    }
+			bean.setPubDate(format.parse(tempDate));
+		} catch (ParseException e) {
+			bean.setPubDate(new Date());
+		}
+		bean.setBookDescribe(bean.getBookDescribe().replace("\n", "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"));
+		String tempPrice = bean.getTempPrice();
+		if (tempPrice.equals("")) {
+			bean.setBookPrice(50.0f);
+		} else {
+			bean.setBookPrice(Float.parseFloat(tempPrice.replaceAll("[^.\\d]", "")));
+		}
+		bookService.insertBook(bean);
+	}
 }

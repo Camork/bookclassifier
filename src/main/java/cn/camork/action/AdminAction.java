@@ -26,110 +26,109 @@ import java.util.Map;
 @RequestMapping("/admin")
 public class AdminAction {
 
-    @Autowired
-    private PipelineFactory springPipelineFactory;
+	@Autowired
+	private PipelineFactory springPipelineFactory;
 
-    @Autowired
-    private OrderService orderService;
+	@Autowired
+	private OrderService orderService;
 
-    @RequiresRoles("admin")
-    @RequestMapping("adminCenter")
-    public String adminCenter(){
-        return "/admin/adminCenter";
-    }
+	@RequiresRoles("admin")
+	@RequestMapping("adminCenter")
+	public String adminCenter() {
+		return "/admin/adminCenter";
+	}
 
-    @RequiresRoles("admin")
-    @RequestMapping("orderList")
-    public String adminCenter(@RequestParam(required = false) String status, Map<String, List<Order>> m) {
+	@RequiresRoles("admin")
+	@RequestMapping("orderList")
+	public String adminCenter(@RequestParam(required = false) String status, Map<String, List<Order>> m) {
 
-        List<Order> orders = orderService.getMyOrders(null,status);
-        m.put("orders", orders);
-        return "/admin/orderList";
-    }
+		List<Order> orders = orderService.getMyOrders(null, status);
+		m.put("orders", orders);
+		return "/admin/orderList";
+	}
 
 	@ResponseBody
 	@RequestMapping("/bookApi")
-	public Map<String, String> bookApi(String urlStr) throws Exception{
+	public Map<String, String> bookApi(String urlStr) throws Exception {
 		Map<String, String> m = new HashMap<>();
 
-		URL url= new URL(urlStr);
+		URL url = new URL(urlStr);
 
 		URLConnection con = url.openConnection();
 
 		InputStream is = con.getInputStream();
 
-	    AipOcrClient.webImageOCR(is);
-
+		AipOcrClient.webImageOCR(is);
 
 
 		return m;
 	}
 
-    @ResponseBody
-    @RequestMapping("/updateType")
-    public Map<String, String> updateType() {
-        Map<String, String> m = new HashMap<>();
+	@ResponseBody
+	@RequestMapping("/updateType")
+	public Map<String, String> updateType() {
+		Map<String, String> m = new HashMap<>();
 
-        HttpGetRequest start = new HttpGetRequest("https://book.douban.com/tag");
+		HttpGetRequest start = new HttpGetRequest("https://book.douban.com/tag");
 
-        try {
-            GeccoEngine.create()
-                    .classpath("cn.camork.crawler.booktype")
-                    .pipelineFactory(springPipelineFactory)
-                    .start(start)
-                    .run();
-            m.put("state", "ok");
+		try {
+			GeccoEngine.create()
+					.classpath("cn.camork.crawler.booktype")
+					.pipelineFactory(springPipelineFactory)
+					.start(start)
+					.run();
+			m.put("state", "ok");
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            m.put("state", "fail");
-        }
-        return m;
-    }
+		} catch (Exception e) {
+			e.printStackTrace();
+			m.put("state", "fail");
+		}
+		return m;
+	}
 
-    @ResponseBody
-    @RequestMapping("/updateBookByType")
-    public Map<String, String> updateBookByType(String type) {
-        Map<String, String> m = new HashMap<>();
+	@ResponseBody
+	@RequestMapping("/updateBookByType")
+	public Map<String, String> updateBookByType(String type) {
+		Map<String, String> m = new HashMap<>();
 
-        if ("".equals(type)) {
-            m.put("state", "fail");
-        } else {
-            HttpGetRequest start = new HttpGetRequest("https://book.douban.com/tag/" + type);
-            GeccoEngine.create()
-                    .classpath("cn.camork.crawler")
-                    .pipelineFactory(springPipelineFactory)
-                    .thread(3)
-                    .start(start)
-                    .run();
-            m.put("state", "ok");
+		if ("".equals(type)) {
+			m.put("state", "fail");
+		} else {
+			HttpGetRequest start = new HttpGetRequest("https://book.douban.com/tag/" + type);
+			GeccoEngine.create()
+					.classpath("cn.camork.crawler")
+					.pipelineFactory(springPipelineFactory)
+					.thread(3)
+					.start(start)
+					.run();
+			m.put("state", "ok");
 
-        }
-        return m;
-    }
+		}
+		return m;
+	}
 
-    @ResponseBody
-    @RequestMapping("/updateNewBook")
-    public Map<String, String> updateNewBook() {
+	@ResponseBody
+	@RequestMapping("/updateNewBook")
+	public Map<String, String> updateNewBook() {
 
-        Map<String, String> m = new HashMap<>();
+		Map<String, String> m = new HashMap<>();
 
-        HttpGetRequest start = new HttpGetRequest("https://book.douban.com/");
+		HttpGetRequest start = new HttpGetRequest("https://book.douban.com/");
 
-        try {
-            GeccoEngine.create()
-                    .classpath("cn.camork.crawler")
-                    .pipelineFactory(springPipelineFactory)
-                    .thread(3)
-                    .start(start)
-                    .run();
-            m.put("state", "ok");
+		try {
+			GeccoEngine.create()
+					.classpath("cn.camork.crawler")
+					.pipelineFactory(springPipelineFactory)
+					.thread(3)
+					.start(start)
+					.run();
+			m.put("state", "ok");
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            m.put("state", "fail");
-        }
-        return m;
-    }
+		} catch (Exception e) {
+			e.printStackTrace();
+			m.put("state", "fail");
+		}
+		return m;
+	}
 
 }

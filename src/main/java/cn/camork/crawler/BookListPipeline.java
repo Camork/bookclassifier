@@ -14,19 +14,19 @@ import java.util.List;
 @Service("bookListPipeline")
 public class BookListPipeline implements Pipeline<BookListSpider> {
 
-    @Override
-    public void process(BookListSpider bean) {
-        List<String> beanBooks = bean.getBooks();
+	@Override
+	public void process(BookListSpider bean) {
+		List<String> beanBooks = bean.getBooks();
 
-        for (String book : beanBooks) {
-            String[] strs = book.split("/");
-            String[] urls=bean.getRequest().getUrl().split("/");
+		for (String book : beanBooks) {
+			String[] strs = book.split("/");
+			String[] urls = bean.getRequest().getUrl().split("/");
 
-            int bookId=Integer.parseInt(strs[4]);
-            String type=urls[urls.length - 1];
+			int bookId = Integer.parseInt(strs[4]);
+			String type = urls[urls.length - 1];
 
-            String url="https://api.douban.com/v2/book/"+bookId+"?"+"bookType="+type;
-            DeriveSchedulerContext.into(bean.getRequest().subRequest(url));
-        }
-    }
+			String url = "https://api.douban.com/v2/book/" + bookId + "?" + "bookType=" + type;
+			DeriveSchedulerContext.into(bean.getRequest().subRequest(url));
+		}
+	}
 }

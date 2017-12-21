@@ -13,31 +13,31 @@ import java.util.List;
  * Created by Camork on 2017-05-14.
  * 热门图书
  */
-@Gecco(matchUrl = "https://book.douban.com/", pipelines = {"consolePipeline","newBookPipeline"})
+@Gecco(matchUrl = "https://book.douban.com/", pipelines = {"consolePipeline", "newBookPipeline"})
 public class NewBookSpider implements HtmlBean {
 
-    private static final long serialVersionUID = 7568012105851744604L;
+	private static final long serialVersionUID = 7568012105851744604L;
 
-    @Request
-    private HttpRequest request;
+	@Request
+	private HttpRequest request;
 
-    @Href
-    @HtmlField(cssPath=".carousel .cover>a")
-    private List<String> books;
+	@Href
+	@HtmlField(cssPath = ".carousel .cover>a")
+	private List<String> books;
 
-    public HttpRequest getRequest() {
-        return request;
-    }
+	public HttpRequest getRequest() {
+		return request;
+	}
 
-    public void setRequest(HttpRequest request) {
-        this.request = request;
-    }
+	public void setRequest(HttpRequest request) {
+		this.request = request;
+	}
 
-    public List<String> getBooks() {
-        return books;
-    }
+	public List<String> getBooks() {
+		return books;
+	}
 
-    public void setBooks(List<String> books) {
-        this.books = books;
-    }
+	public void setBooks(List<String> books) {
+		this.books = books;
+	}
 }

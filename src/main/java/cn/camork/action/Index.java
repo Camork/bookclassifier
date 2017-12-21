@@ -18,31 +18,31 @@ import java.util.Map;
 @Controller
 public class Index {
 
-    @Autowired
-    private BookService bookService;
+	@Autowired
+	private BookService bookService;
 
-    public static final Logger log = Logger.getLogger("name");
+	public static final Logger log = Logger.getLogger("name");
 
-    @RequestMapping("/index")
-    public String index(Map<String,List<Book>> m) {
-        List<Book> hotBooks=bookService.getHotBooks();
-        m.put("hotBooks", hotBooks);
-        return "home";
-    }
+	@RequestMapping("/index")
+	public String index(Map<String, List<Book>> m) {
+		List<Book> hotBooks = bookService.getHotBooks();
+		m.put("hotBooks", hotBooks);
+		return "home";
+	}
 
 
-    @RequestMapping("/test")
-    public String test(Map<String,List<Book>> m) {
-        List<Book> hotBooks=bookService.getHotBooks();
-        m.put("hotBooks", hotBooks);
-        return "page/test";
-    }
+	@RequestMapping("/test")
+	public String test(Map<String, List<Book>> m) {
+		List<Book> hotBooks = bookService.getHotBooks();
+		m.put("hotBooks", hotBooks);
+		return "page/test";
+	}
 
-    @RequestMapping("/order")
-    public String order(Map<String,List<Book>> m) {
+	@RequestMapping("/order")
+	public String order(Map<String, List<Book>> m) {
 
-        return "page/order";
-    }
+		return "page/order";
+	}
 
 
 }

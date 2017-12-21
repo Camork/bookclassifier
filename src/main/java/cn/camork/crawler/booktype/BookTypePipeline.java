@@ -11,31 +11,29 @@ import java.util.List;
 @Service("bookTypePipeline")
 public class BookTypePipeline implements Pipeline<BookTypeSpider> {
 
-    private BookService bookService;
+	private BookService bookService;
 
-    @Autowired
-    public void setBookService(BookService bookService) {
-        this.bookService = bookService;
-    }
+	@Autowired
+	public void setBookService(BookService bookService) {
+		this.bookService = bookService;
+	}
 
 	@Override
 	public void process(BookTypeSpider bean) {
-         List<Category>  categories=bean.getCategories();
+		List<Category> categories = bean.getCategories();
 
-        for(Category category : categories) {
+		for (Category category : categories) {
 
-            for (BookType bookType :category.getBookTypes()){
+			for (BookType bookType : category.getBookTypes()) {
 
-                bookType.setTypeTitle(category.getTagTitle());
-                bookService.insertBookType(bookType);
-            }
+				bookType.setTypeTitle(category.getTagTitle());
+				bookService.insertBookType(bookType);
+			}
 
 
-
-        }
+		}
 
 	}
-
 
 
 }

@@ -30,104 +30,103 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserAction {
 
-    private UserService userService;
+	private UserService userService;
 
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
+	@Autowired
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
 
-    @ResponseBody
-    @RequestMapping("/login")
-    public Map<String, ArrayList<String>> login(UserBean userBean,boolean checked) {
-        Subject currentUser = SecurityUtils.getSubject();
-        Map<String, ArrayList<String>> m = new HashMap<>();
-        ArrayList<String> array = new ArrayList<>();
+	@ResponseBody
+	@RequestMapping("/login")
+	public Map<String, ArrayList<String>> login(UserBean userBean, boolean checked) {
+		Subject currentUser = SecurityUtils.getSubject();
+		Map<String, ArrayList<String>> m = new HashMap<>();
+		ArrayList<String> array = new ArrayList<>();
 
-        if (!currentUser.isAuthenticated()) {
-            UsernamePasswordToken token = new UsernamePasswordToken(userBean.getUserName(), userBean.getUserPass());
-            token.setRememberMe(checked);
-            try {
-                currentUser.login(token);
-                array.add("登录成功");
-            }
-            catch (AuthenticationException ae) {
-                if (ae instanceof IncorrectCredentialsException){
-                    array.add("密码错误");
-                }else {
-                    array.add(ae.getMessage());
-                }
-                array.add("登录失败");
-                System.out.println("登录失败: " + ae.getMessage());
-            }
-        }
+		if (!currentUser.isAuthenticated()) {
+			UsernamePasswordToken token = new UsernamePasswordToken(userBean.getUserName(), userBean.getUserPass());
+			token.setRememberMe(checked);
+			try {
+				currentUser.login(token);
+				array.add("登录成功");
+			} catch (AuthenticationException ae) {
+				if (ae instanceof IncorrectCredentialsException) {
+					array.add("密码错误");
+				} else {
+					array.add(ae.getMessage());
+				}
+				array.add("登录失败");
+				System.out.println("登录失败: " + ae.getMessage());
+			}
+		}
 
-        m.put("login", array);
-        return m;
+		m.put("login", array);
+		return m;
 
-    }
+	}
 
-    @ResponseBody
-    @RequestMapping("/reg")
-    public Map<String, ArrayList<String>> reg(@Validated UserBean userBean, BindingResult result, String userPassConfirm) {
+	@ResponseBody
+	@RequestMapping("/reg")
+	public Map<String, ArrayList<String>> reg(@Validated UserBean userBean, BindingResult result, String userPassConfirm) {
 
-        Map<String, ArrayList<String>> m = new HashMap<>();
-        ArrayList<String> array = new ArrayList<>();
+		Map<String, ArrayList<String>> m = new HashMap<>();
+		ArrayList<String> array = new ArrayList<>();
 
-        if (result.hasErrors()) {
-            List<ObjectError> a = result.getAllErrors();
+		if (result.hasErrors()) {
+			List<ObjectError> a = result.getAllErrors();
 
-            for (ObjectError objectError : a) {
-                System.out.println(objectError.getCode());
-                System.out.println(objectError.getDefaultMessage());
-                array.add(objectError.getDefaultMessage());
-            }
+			for (ObjectError objectError : a) {
+				System.out.println(objectError.getCode());
+				System.out.println(objectError.getDefaultMessage());
+				array.add(objectError.getDefaultMessage());
+			}
 
-            array.add("注册失败");
-            m.put("reg", array);
-            return m;
-        }
+			array.add("注册失败");
+			m.put("reg", array);
+			return m;
+		}
 
-        if (!userPassConfirm.equals(userBean.getUserPass())) {
-            array.add("两次密码输入不一样");
-            array.add("注册失败");
-        } else {
-            if (userService.regUser(userBean)) {
-                array.add("注册成功");
-            } else {
-                array.add("用户名已被注册");
-            }
-        }
-        m.put("reg", array);
-        return m;
-    }
+		if (!userPassConfirm.equals(userBean.getUserPass())) {
+			array.add("两次密码输入不一样");
+			array.add("注册失败");
+		} else {
+			if (userService.regUser(userBean)) {
+				array.add("注册成功");
+			} else {
+				array.add("用户名已被注册");
+			}
+		}
+		m.put("reg", array);
+		return m;
+	}
 
-    @ResponseBody
-    @RequestMapping("/checkUserName")
-    public Map<String, Boolean> checkUserName(@RequestParam String userName) throws Exception {
+	@ResponseBody
+	@RequestMapping("/checkUserName")
+	public Map<String, Boolean> checkUserName(@RequestParam String userName) throws Exception {
 
-        Index.log.warn(userName);
+		Index.log.warn(userName);
 
-        boolean available = userService.checkUserName(userName);
-        Map<String, Boolean> m = new HashMap<>();
+		boolean available = userService.checkUserName(userName);
+		Map<String, Boolean> m = new HashMap<>();
 
-        m.put("available", available);
+		m.put("available", available);
 
-        return m;
-    }
+		return m;
+	}
 
 
-    /**
-     * 用户登出
-     */
-    @ResponseBody
-    @RequestMapping("/logout")
-    public Map<String, String> logout() throws Exception {
-        // getSession().invalidate();
-        Map<String, String> m = new HashMap<String, String>();
-        m.put("logout", "yes");
-        return m;
-    }
+	/**
+	 * 用户登出
+	 */
+	@ResponseBody
+	@RequestMapping("/logout")
+	public Map<String, String> logout() throws Exception {
+		// getSession().invalidate();
+		Map<String, String> m = new HashMap<String, String>();
+		m.put("logout", "yes");
+		return m;
+	}
 
 
 }
