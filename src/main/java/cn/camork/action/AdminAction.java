@@ -58,9 +58,8 @@ public class AdminAction {
 
 		InputStream is = con.getInputStream();
 
-		System.out.println(url);
-		Ai a=new Ai();
-		a.webImageOCR(a.getInstance(),is);
+	    AipOcrClient.webImageOCR(is);
+
 
 
 		return m;
