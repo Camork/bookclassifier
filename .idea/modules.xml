@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/bookclassifier.iml" filepath="$PROJECT_DIR$/bookclassifier.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bookclassifier.iml" filepath="$PROJECT_DIR$/.idea/modules/bookclassifier.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bookclassifier_main.iml" filepath="$PROJECT_DIR$/.idea/modules/bookclassifier_main.iml" group="bookclassifier" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bookclassifier_test.iml" filepath="$PROJECT_DIR$/.idea/modules/bookclassifier_test.iml" group="bookclassifier" />
     </modules>
   </component>
 </project>
