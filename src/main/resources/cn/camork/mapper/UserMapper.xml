@@ -4,9 +4,9 @@
 
     <select id="userLogin" parameterType="String" resultType="UserBean">
         SELECT
-            user_name userName,
-            user_pass userPass,
-            user_role userRole
+        user_name userName,
+        user_pass userPass,
+        user_role userRole
         FROM b_users
         WHERE user_name = #{userName}
     </select>

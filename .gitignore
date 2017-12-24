@@ -1,6 +1,10 @@
 .idea/gradle.xml
 .idea/inspectionProfiles/
+.idea/libraries
+.idea/artifacts
+.idea/modules
 .idea/workspace.xml
+
 out
 build/
 gradle/

@@ -154,20 +154,16 @@ function updateNewBook() {
 }
 
 function bookApi() {
-
-    var urlStr = $('#xxxx').val();
-    $.post(getContextPath() + "/admin/bookApi",
-        {
-            urlStr: urlStr
-        }, function (result) {
-            if (result.state === "ok") {
-                Materialize.toast('刷新成功', 4000);
-                $('#loaderModal').modal('close');
-            } else {
-                Materialize.toast('刷新失败', 4000);
-                $('#loaderModal').modal('close');
-            }
-        })
+    var urlStr = $('#imageUrl').val();
+    $.post(getContextPath() + "/admin/bookApi", {
+        urlStr: urlStr
+    }, function (result) {
+        var arr = result.returnArray;
+        Materialize.toast(arr, 4000);
+        for (var x in arr) {
+            Materialize.toast(arr[x], 4000);
+        }
+    })
 
 }
 

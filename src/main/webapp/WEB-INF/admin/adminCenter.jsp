@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <html>
 <head>
     <title>管理员后台</title>
@@ -20,22 +20,18 @@
 <%@include file="../common/preloader.jsp" %>
 
 <div class="container">
-<div class="row" style="margin-top: 100px">
-    根据类型更新数据:
-    <div class="input-field">
-        <input id="xxx" type="text" style="width:15%"/>
-        <label for="xxx">类型</label>
-        <a class="btn waves-effect waves-light " onclick="updateBookByType()">获取数据</a>
+    <div class="row" style="margin-top: 100px">
+        根据类型更新数据:
+        <div class="input-field">
+            <input id="xxx" type="text" style="width:15%"/>
+            <label for="xxx">类型</label>
+            <a class="btn waves-effect waves-light " onclick="updateBookByType()">获取数据</a>
+        </div>
+        <a class="btn waves-effect waves-light" onclick="updateNewBook()">首页新书刷新</a>
     </div>
 
-</div>
-    <a class="btn waves-effect waves-light" style="margin-top: 50px" onclick="updateNewBook()">首页新书刷新</a>
+    <button class="btn modal-trigger row" data-target="modalPop">图书识别接口</button>
 
-    <div class="input-field">
-        <input id="xxxx" type="text"/>
-        <label for="xxxx">类型</label>
-        <a class="btn waves-effect waves-light " onclick="bookApi()">图书识别接口</a>
-    </div>
 </div>
 
 </body>

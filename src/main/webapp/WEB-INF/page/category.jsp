@@ -12,7 +12,7 @@
 </head>
 <body class="loaded">
 
-<nav class="nav-extended">
+<nav class="nav-extended" style="background-color: #03a9f4">
     <div class="nav-wrapper">
 
         <ul id="nav-mobile" class="left hide-on-med-and-down" style="margin-left: 5%">
@@ -33,7 +33,7 @@
     </div>
     <div class="nav-content" style="height: 40%">
         <a class="btn-floating btn-large halfway-fab waves-effect waves-light red disabled">
-            <i class="material-icons" onclick="refreshURL('<%=request.getContextPath()%>/book/updateType')">refresh</i>
+            <i class="material-icons" onclick="updateType()">refresh</i>
         </a>
     </div>
 </nav>

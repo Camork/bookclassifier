@@ -13,14 +13,14 @@
 
     <select id="getHotBooks" resultType="BookBean">
         SELECT
-            book_id        bookId,
-            type_name      typeName,
-            book_name      bookName,
-            book_price     bookPrice,
-            book_author    bookAuthor,
-            book_publisher publisher,
-            book_pic       bookPic,
-            book_describe  bookDescribe
+        book_id bookId,
+        type_name typeName,
+        book_name bookName,
+        book_price bookPrice,
+        book_author bookAuthor,
+        book_publisher publisher,
+        book_pic bookPic,
+        book_describe bookDescribe
         FROM b_books
         WHERE type_name = "book.douban.com"
         ORDER BY book_pubdate DESC
@@ -29,23 +29,23 @@
 
     <select id="getBookTypes" resultType="BookType">
         SELECT
-            type_title typeTitle,
-            type_name  typeName,
-            type_url   url
+        type_title typeTitle,
+        type_name typeName,
+        type_url url
         FROM b_type
         WHERE type_title != ''
     </select>
 
     <select id="getBooksByType" resultType="BookBean">
         SELECT
-            book_id        bookId,
-            type_name      typeName,
-            book_name      bookName,
-            book_price     bookPrice,
-            book_author    bookAuthor,
-            book_publisher publisher,
-            book_pic       bookPic,
-            book_describe  bookDescribe
+        book_id bookId,
+        type_name typeName,
+        book_name bookName,
+        book_price bookPrice,
+        book_author bookAuthor,
+        book_publisher publisher,
+        book_pic bookPic,
+        book_describe bookDescribe
         FROM b_books
         WHERE type_name = #{0}
         ORDER BY book_pubdate DESC

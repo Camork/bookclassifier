@@ -6,6 +6,8 @@ import com.geccocrawler.gecco.GeccoEngine;
 import com.geccocrawler.gecco.pipeline.PipelineFactory;
 import com.geccocrawler.gecco.request.HttpGetRequest;
 import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,18 +52,25 @@ public class AdminAction {
 
 	@ResponseBody
 	@RequestMapping("/bookApi")
-	public Map<String, String> bookApi(String urlStr) throws Exception {
-		Map<String, String> m = new HashMap<>();
+	public Map<String, List<String>> bookApi(String urlStr) throws Exception {
+
+		Map<String, List<String>> m=new HashMap<>();
 
 		URL url = new URL(urlStr);
 
 		URLConnection con = url.openConnection();
 
-		InputStream is = con.getInputStream();
+		InputStream inputStream = con.getInputStream();
 
-		AipOcrClient.webImageOCR(is);
+		List<String> arrayList = new ArrayList<>();
+		JSONArray jsonArray = AipOcrClient.webImageOCR(inputStream).getJSONArray("words_result");
 
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject item = jsonArray.getJSONObject(i);
+			arrayList.add(item.getString("words"));
+		}
 
+		m.put("returnArray", arrayList);
 		return m;
 	}
 
