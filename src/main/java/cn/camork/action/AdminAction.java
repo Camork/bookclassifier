@@ -1,22 +1,19 @@
 package cn.camork.action;
 
+import cn.camork.core.CoreUtils;
+import cn.camork.core.IRecognize;
 import cn.camork.model.Order;
 import cn.camork.service.OrderService;
 import com.geccocrawler.gecco.GeccoEngine;
 import com.geccocrawler.gecco.pipeline.PipelineFactory;
 import com.geccocrawler.gecco.request.HttpGetRequest;
-import org.apache.shiro.authz.annotation.RequiresRoles;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,13 +32,13 @@ public class AdminAction {
 	@Autowired
 	private OrderService orderService;
 
-	@RequiresRoles("admin")
+	//@RequiresRoles("admin")
 	@RequestMapping("adminCenter")
 	public String adminCenter() {
 		return "/admin/adminCenter";
 	}
 
-	@RequiresRoles("admin")
+	//@RequiresRoles("admin")
 	@RequestMapping("orderList")
 	public String adminCenter(@RequestParam(required = false) String status, Map<String, List<Order>> m) {
 
@@ -52,25 +49,21 @@ public class AdminAction {
 
 	@ResponseBody
 	@RequestMapping("/bookApi")
-	public Map<String, List<String>> bookApi(String urlStr) throws Exception {
+	public Map<String, List<String>> bookApi(MultipartHttpServletRequest request) throws Exception {
 
-		Map<String, List<String>> m=new HashMap<>();
+		Map<String, List<String>> m = new HashMap<>();
 
-		URL url = new URL(urlStr);
+		IRecognize recognize = CoreUtils.getRecognize(request);
 
-		URLConnection con = url.openConnection();
-
-		InputStream inputStream = con.getInputStream();
-
-		List<String> arrayList = new ArrayList<>();
-		JSONArray jsonArray = AipOcrClient.webImageOCR(inputStream).getJSONArray("words_result");
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject item = jsonArray.getJSONObject(i);
-			arrayList.add(item.getString("words"));
+		if (recognize != null) {
+			m.put("returnArray", recognize.getTexts());
+		}
+		else {
+			ArrayList<String> list = new ArrayList<>();
+			list.add("输入数据为空或错误");
+			m.put("returnArray", list);
 		}
 
-		m.put("returnArray", arrayList);
 		return m;
 	}
 
@@ -89,7 +82,8 @@ public class AdminAction {
 					.run();
 			m.put("state", "ok");
 
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 			m.put("state", "fail");
 		}
@@ -103,7 +97,8 @@ public class AdminAction {
 
 		if ("".equals(type)) {
 			m.put("state", "fail");
-		} else {
+		}
+		else {
 			HttpGetRequest start = new HttpGetRequest("https://book.douban.com/tag/" + type);
 			GeccoEngine.create()
 					.classpath("cn.camork.crawler")
@@ -134,7 +129,8 @@ public class AdminAction {
 					.run();
 			m.put("state", "ok");
 
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 			m.put("state", "fail");
 		}

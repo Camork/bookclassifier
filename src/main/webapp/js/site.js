@@ -154,17 +154,23 @@ function updateNewBook() {
 }
 
 function bookApi() {
-    var urlStr = $('#imageUrl').val();
-    $.post(getContextPath() + "/admin/bookApi", {
-        urlStr: urlStr
-    }, function (result) {
-        var arr = result.returnArray;
-        Materialize.toast(arr, 4000);
-        for (var x in arr) {
-            Materialize.toast(arr[x], 4000);
+    var formData = new FormData($("#uploadForm")[0]);
+    $.ajax({
+        url: getContextPath() + "/admin/bookApi" ,
+        type: 'POST',
+        data: formData,
+        async: false,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (result) {
+            var arr = result.returnArray;
+            Materialize.toast(arr, 4000);
+        },
+        error: function (result) {
+            alert("输入数据为空或错误");
         }
-    })
-
+    });
 }
 
 function getTag(typeName) {

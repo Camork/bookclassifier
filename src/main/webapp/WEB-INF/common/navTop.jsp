@@ -13,14 +13,13 @@
                             <li><a class="waves-effect waves-light">欢迎<shiro:principal/>登录</a></li>
                         </shiro:user>
                         <shiro:lacksRole name="admin">
-                            <li><a class="waves-effect waves-light" onclick="showCart(<%=SecurityUtils.getSubject().isAuthenticated()%>)">购物车列表</a>
-                            </li>
+                            <li><a class="waves-effect waves-light" onclick="showCart(<%=SecurityUtils.getSubject().isAuthenticated()%>)">购物车列表</a></li>
                             <li><a class="waves-effect waves-light" href="<%=request.getContextPath()%>/order/getMyOrders">订单列表</a></li>
                         </shiro:lacksRole>
-                        <shiro:hasRole name="admin">
+                        <%--<shiro:hasRole name="admin">--%>
                             <li><a class="waves-effect waves-light" href="<%=request.getContextPath()%>/admin/orderList">用户订单列表</a></li>
                             <li><a class="waves-effect waves-light" href="<%=request.getContextPath()%>/admin/adminCenter">管理员后台</a></li>
-                        </shiro:hasRole>
+                        <%--</shiro:hasRole>--%>
                     </ul>
 
                 </div>

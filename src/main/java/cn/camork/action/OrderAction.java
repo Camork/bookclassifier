@@ -37,7 +37,8 @@ public class OrderAction {
 
 		if (principal == null || "".equals(principal)) {
 			m.put("message", "请先登录");
-		} else {
+		}
+		else {
 			Order order = new Order(principal, 0, new Date(), jsonOrder.getTotalAmount(), jsonOrder.getTotalNumber());
 
 			List<OrderDetail> orderDetails = new ArrayList<>();
@@ -69,7 +70,8 @@ public class OrderAction {
 		try {
 			orderService.changeOrderStatus(orderId, status);
 			m.put("handle", "success");
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 			m.put("handle", "exception");
 		}

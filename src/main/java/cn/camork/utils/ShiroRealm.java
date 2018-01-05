@@ -1,4 +1,4 @@
-package cn.camork.realms;
+package cn.camork.utils;
 
 import cn.camork.model.UserBean;
 import cn.camork.service.UserService;
@@ -36,8 +36,7 @@ public class ShiroRealm extends AuthorizingRealm {
 		}
 		String realmName = getName();
 
-		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user.getUserName(), user.getUserPass(), realmName);
-		return info;
+		return new SimpleAuthenticationInfo(user.getUserName(), user.getUserPass(), realmName);
 	}
 
 	@Override

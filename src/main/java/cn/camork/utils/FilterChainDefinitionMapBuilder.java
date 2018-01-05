@@ -11,7 +11,7 @@ public class FilterChainDefinitionMapBuilder {
 		map.put("/index", "anon");
 		map.put("/logout", "logout");
 		map.put("/order/getMyOrders", "authc");
-		map.put("/admin/adminCenter", "authc");
+		//map.put("/admin/adminCenter", "authc");
 
 		return map;
 	}

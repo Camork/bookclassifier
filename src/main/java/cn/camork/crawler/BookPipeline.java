@@ -31,24 +31,28 @@ public class BookPipeline implements Pipeline<Book> {
 			SimpleDateFormat format = new SimpleDateFormat();
 			if (tempDate.length() == 4) {
 				format = new SimpleDateFormat("yyyy");
-			} else {
+			}
+			else {
 				String[] strs = tempDate.split("-");
 				if (strs.length == 2) {
 					format = new SimpleDateFormat("yyyy-MM");
-				} else if (strs.length == 3) {
+				}
+				else if (strs.length == 3) {
 					format = new SimpleDateFormat("yyyy-MM-dd");
 				}
 			}
 
 			bean.setPubDate(format.parse(tempDate));
-		} catch (ParseException e) {
+		}
+		catch (ParseException e) {
 			bean.setPubDate(new Date());
 		}
 		bean.setBookDescribe(bean.getBookDescribe().replace("\n", "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"));
 		String tempPrice = bean.getTempPrice();
 		if (tempPrice.equals("")) {
 			bean.setBookPrice(50.0f);
-		} else {
+		}
+		else {
 			bean.setBookPrice(Float.parseFloat(tempPrice.replaceAll("[^.\\d]", "")));
 		}
 		bookService.insertBook(bean);

@@ -31,9 +31,8 @@ public class AipOcrClient {
 		return client;
 	}
 
-	public static JSONObject webImageOCR(InputStream input) throws Exception {
-		JSONObject response = getInstance().webImage(IOUtils.toByteArray(input), new HashMap<>());
-
-		return response;
+	public static JSONObject webImageOCR(InputStream inputStream) throws Exception {
+		return getInstance().webImage(IOUtils.toByteArray(inputStream), new HashMap<>());
 	}
+
 }

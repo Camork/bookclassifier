@@ -1,12 +1,12 @@
 package cn.camork.core;
 
+import java.util.List;
+
 /**
  * Created by camork on 24/12/2017.
  */
 public interface IRecognize {
 
-	String URL_REGEX="^((ht|f)tps?):\\/\\/[\\w\\-]+(\\.[\\w\\-]+)+([\\w\\-\\.,@?^=%&:\\/~\\+#]*[\\w\\-\\@?^=%&\\/~\\+#])?$";
-
-	boolean dispose();
+	List<String> getTexts();
 
 }

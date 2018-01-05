@@ -69,23 +69,26 @@
 
         <div>
             url链接和图片上传二选其一
-            <form action="#">
+
+            <form id="uploadForm">
+
                 <div class="input-field">
-                    <input id="imageUrl" type="text"/>
+                    <input id="imageUrl" type="text" name="imageUrl"/>
                     <label for="imageUrl">请输入网络图片url</label>
                 </div>
 
                 <div class="file-field input-field">
                     <div class="btn">
                         <span>Upload File</span>
-                        <input type="file">
+                        <input type="file" name="imageFile">
                     </div>
-
                     <div class="file-path-wrapper">
                         <input class="file-path validate" type="text">
                     </div>
                 </div>
+
             </form>
+
         </div>
 
     </div>

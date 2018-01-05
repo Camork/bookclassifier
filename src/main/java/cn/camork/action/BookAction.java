@@ -44,7 +44,8 @@ public class BookAction {
 			if (categories.get(title) == null) {
 				data = new ArrayList<>();
 				data.add(bookType);
-			} else {
+			}
+			else {
 				categories.get(title).add(bookType);
 			}
 			categories.put(title, data);

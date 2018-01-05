@@ -50,10 +50,12 @@ public class UserAction {
 			try {
 				currentUser.login(token);
 				array.add("登录成功");
-			} catch (AuthenticationException ae) {
+			}
+			catch (AuthenticationException ae) {
 				if (ae instanceof IncorrectCredentialsException) {
 					array.add("密码错误");
-				} else {
+				}
+				else {
 					array.add(ae.getMessage());
 				}
 				array.add("登录失败");
@@ -90,10 +92,12 @@ public class UserAction {
 		if (!userPassConfirm.equals(userBean.getUserPass())) {
 			array.add("两次密码输入不一样");
 			array.add("注册失败");
-		} else {
+		}
+		else {
 			if (userService.regUser(userBean)) {
 				array.add("注册成功");
-			} else {
+			}
+			else {
 				array.add("用户名已被注册");
 			}
 		}

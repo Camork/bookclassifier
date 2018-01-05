@@ -31,7 +31,8 @@ public class UserServiceImpl implements UserService {
 		try {
 			int i = userMapper.regUser(userBean);
 			return true;
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
@@ -44,7 +45,8 @@ public class UserServiceImpl implements UserService {
 
 		try {
 			int a = userMapper.checkUserName(u);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			return true;
 		}
 
