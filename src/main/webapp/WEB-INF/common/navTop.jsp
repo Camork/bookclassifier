@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <%@ page import="org.apache.shiro.SecurityUtils" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <header>

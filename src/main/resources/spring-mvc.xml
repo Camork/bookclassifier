@@ -36,7 +36,7 @@
 
     <!-- 可以直接相应转发的页面, 而无需再经过 Handler 的方法. -->
     <mvc:view-controller path="/login"/>
-    <!--<mvc:view-controller path="/userCenter" view-name="/user/userCenter"/>-->
+    <mvc:view-controller path="/admin/bookList" view-name="/admin/bookList"/>
 
 
     <!-- 配置静态资源，直接映射到对应的文件夹 -->

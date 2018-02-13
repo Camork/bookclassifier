@@ -8,7 +8,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>书籍分类</title>
     <%@include file="../common/headSources.jsp" %>
-    <link href="<%=request.getContextPath()%>/css/loader.css" rel="stylesheet">
 </head>
 <body class="loaded">
 

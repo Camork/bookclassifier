@@ -5,7 +5,6 @@
     <title>Title</title>
     <%@include file="../common/headSources.jsp" %>
     <link href="<%=request.getContextPath()%>/css/gallery-materialize.min.css" rel="stylesheet">
-    <link href="<%=request.getContextPath()%>/css/loader.css" rel="stylesheet">
     <script src="<%=request.getContextPath()%>/js/gallery.min.js"></script>
 </head>
 <body>

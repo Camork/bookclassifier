@@ -15,6 +15,9 @@ public class PicDispose implements IRecognize {
 
 	private MultipartFile filePart;
 
+	public PicDispose() {
+	}
+
 	public PicDispose(MultipartFile filePart) {
 		this.filePart = filePart;
 	}
@@ -23,7 +26,7 @@ public class PicDispose implements IRecognize {
 	public List<String> getTexts() {
 
 		try {
-			arrayList = CoreUtils.getOcrData(filePart.getInputStream());
+			arrayList = CoreUtils.getOcrData(filePart.getInputStream(),null);
 		}
 		catch (Exception e) {
 			e.printStackTrace();

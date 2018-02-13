@@ -2,6 +2,7 @@ package cn.camork.action;
 
 import cn.camork.core.CoreUtils;
 import cn.camork.core.IRecognize;
+import cn.camork.core.dispose.BarcodeDispose;
 import cn.camork.model.Order;
 import cn.camork.service.OrderService;
 import com.geccocrawler.gecco.GeccoEngine;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * Created by Camork on 2017-05-26.
@@ -41,7 +43,6 @@ public class AdminAction {
 	//@RequiresRoles("admin")
 	@RequestMapping("orderList")
 	public String adminCenter(@RequestParam(required = false) String status, Map<String, List<Order>> m) {
-
 		List<Order> orders = orderService.getMyOrders(null, status);
 		m.put("orders", orders);
 		return "/admin/orderList";
@@ -49,20 +50,57 @@ public class AdminAction {
 
 	@ResponseBody
 	@RequestMapping("/bookApi")
-	public Map<String, List<String>> bookApi(MultipartHttpServletRequest request) throws Exception {
+	public Map<String, String> bookApi(MultipartHttpServletRequest request) {
+		CoreUtils.bookList.clear();
 
-		Map<String, List<String>> m = new HashMap<>();
+		Map<String, String> m = new HashMap<>();
 
 		IRecognize recognize = CoreUtils.getRecognize(request);
 
 		if (recognize != null) {
-			m.put("returnArray", recognize.getTexts());
+			List<String> arrayList = recognize.getTexts();
+
+			for (String text : arrayList) {
+				if (text.contains("ISBN") || text.contains("isbn")) {
+					arrayList = new ArrayList<>();
+
+					text = Pattern.compile("\\D").matcher(text).replaceAll("").trim();
+
+					int length = text.length();
+					if (length == 10 || length == 13) {
+						BarcodeDispose barcode = new BarcodeDispose(text);
+						barcode.putBook();
+					}
+					else {
+						m.put("msg", "ISBN号长度不正确:" + text);
+					}
+				}
+			}
+
+			String[] urls=new String[arrayList.size()];
+
+			for(int i=0;i<arrayList.size();i++){
+				urls[i]="https://api.douban.com/v2/book/search?q="+arrayList.get(i).replace(" ","%20");
+			}
+
+			CoreUtils.log.debug(arrayList);
+
+			GeccoEngine.create()
+					.classpath("cn.camork.crawler.search")
+					.pipelineFactory(springPipelineFactory)
+					.start(urls)
+					.thread(4)
+					.run();
+
 		}
 		else {
-			ArrayList<String> list = new ArrayList<>();
-			list.add("输入数据为空或错误");
-			m.put("returnArray", list);
+			m.put("msg", "输入数据为空或错误");
 		}
+
+		if(m.isEmpty()){
+			m.put("msg", "识别成功,请手动选择");
+		}
+		CoreUtils.log.debug(CoreUtils.bookList);
 
 		return m;
 	}
@@ -124,7 +162,7 @@ public class AdminAction {
 			GeccoEngine.create()
 					.classpath("cn.camork.crawler")
 					.pipelineFactory(springPipelineFactory)
-					.thread(3)
+					.thread(10)
 					.start(start)
 					.run();
 			m.put("state", "ok");
@@ -134,7 +172,27 @@ public class AdminAction {
 			e.printStackTrace();
 			m.put("state", "fail");
 		}
+
+
+
 		return m;
+	}
+
+	@ResponseBody
+	@RequestMapping("/similarSearch")
+	public void similarSearch(String name) {
+		try {
+			GeccoEngine.create()
+					.classpath("cn.camork.crawler")
+					.pipelineFactory(springPipelineFactory)
+					.thread(3)
+					.start(new HttpGetRequest("https://api.douban.com/v2/book/search?q=" + name))
+					.run();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }

@@ -35,10 +35,6 @@ $(function () {
         });
     });
 
-    if (document.readyState === 'complete') {
-        $('body').addClass('loaded');
-    }
-
 });
 
 function getContextPath() {
@@ -69,12 +65,12 @@ function refreshURL(url) {
 function login() {
     var userName = $("#username").val();
     var userPass = $("#password").val();
-    var checked=document.getElementById("filled-box").checked;
+    var checked = document.getElementById("filled-box").checked;
 
     $.post(getContextPath() + "/user/login", {
         userName: userName,
         userPass: userPass,
-        checked:checked
+        checked: checked
     }, function (result) {
         var arr = result.login;
         for (var x in arr) {
@@ -126,9 +122,9 @@ function updateType() {
 function updateBookByType() {
     $('#loaderModal').modal("open");
     var typeName = $('#xxx').val();
-    $.post(getContextPath() + "/admin/updateBookByType",
+    $.post(getContextPath() + "/admin/similarSearch",
         {
-            type: typeName
+            name: typeName
         }, function (result) {
             if (result.state === "ok") {
                 Materialize.toast('刷新成功', 4000);
@@ -150,13 +146,18 @@ function updateNewBook() {
             Materialize.toast('刷新失败', 4000);
             $('#loaderModal').modal('close');
         }
-    })
+    });
+}
+
+function getTag(typeName) {
+    $('body').removeClass("loaded");
+    window.location.href = getContextPath() + "/book/type/" + typeName;
 }
 
 function bookApi() {
     var formData = new FormData($("#uploadForm")[0]);
     $.ajax({
-        url: getContextPath() + "/admin/bookApi" ,
+        url: getContextPath() + "/admin/bookApi",
         type: 'POST',
         data: formData,
         async: false,
@@ -164,16 +165,24 @@ function bookApi() {
         contentType: false,
         processData: false,
         success: function (result) {
-            var arr = result.returnArray;
-            Materialize.toast(arr, 4000);
+            var msg = result.msg;
+            Materialize.toast(msg, 4000);
+            $(".bookContainer").load(getContextPath() + "/admin/bookList");
+            $('#bookPop').modal('open');
         },
         error: function (result) {
-            alert("输入数据为空或错误");
+            Materialize.toast('出现未知错误', 4000);
         }
     });
 }
 
-function getTag(typeName) {
-    $('body').removeClass("loaded");
-    window.location.href = getContextPath() + "/book/type/" + typeName;
+function addBook(id) {
+    $.post(getContextPath() + "/book/addBook",
+        {
+            id: id
+        }, function (result) {
+                Materialize.toast(result.msg, 4000);
+                $('#loaderModal').modal('close');
+
+        });
 }

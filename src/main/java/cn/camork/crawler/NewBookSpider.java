@@ -16,8 +16,6 @@ import java.util.List;
 @Gecco(matchUrl = "https://book.douban.com/", pipelines = {"consolePipeline", "newBookPipeline"})
 public class NewBookSpider implements HtmlBean {
 
-	private static final long serialVersionUID = 7568012105851744604L;
-
 	@Request
 	private HttpRequest request;
 

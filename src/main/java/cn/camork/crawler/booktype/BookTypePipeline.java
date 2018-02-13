@@ -29,11 +29,6 @@ public class BookTypePipeline implements Pipeline<BookTypeSpider> {
 				bookType.setTypeTitle(category.getTagTitle());
 				bookService.insertBookType(bookType);
 			}
-
-
 		}
-
 	}
-
-
 }

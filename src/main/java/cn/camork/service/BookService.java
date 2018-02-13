@@ -2,7 +2,6 @@ package cn.camork.service;
 
 
 import cn.camork.crawler.Book;
-import cn.camork.model.BookBean;
 import cn.camork.model.BookType;
 
 import java.util.List;
@@ -17,6 +16,6 @@ public interface BookService {
 
 	List<BookType> getBookTypes();
 
-	List<BookBean> getBooksByType(String typeName);
+	List<Book> getBooksByType(String typeName);
 
 }

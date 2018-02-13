@@ -15,8 +15,6 @@ import java.util.Date;
 @Gecco(matchUrl = "https://api.douban.com/v2/book/{bookId}?bookType={typeName}", pipelines = {"consolePipeline", "bookPipeline"})
 public class Book implements JsonBean {
 
-	private static final long serialVersionUID = 5107858315835165474L;
-
 	@RequestParameter
 	private int bookId;
 
@@ -42,6 +40,8 @@ public class Book implements JsonBean {
 
 	@JSONPath("$.pubdate")
 	private String tempDate;
+
+	private Date addDate;
 
 	private Date pubDate;
 
@@ -134,5 +134,13 @@ public class Book implements JsonBean {
 
 	public void setBookDescribe(String bookDescribe) {
 		this.bookDescribe = bookDescribe;
+	}
+
+	public Date getAddDate() {
+		return addDate;
+	}
+
+	public void setAddDate(Date addDate) {
+		this.addDate = addDate;
 	}
 }

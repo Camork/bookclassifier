@@ -2,7 +2,6 @@ package cn.camork.action;
 
 import cn.camork.crawler.Book;
 import cn.camork.service.BookService;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +19,6 @@ public class Index {
 
 	@Autowired
 	private BookService bookService;
-
-	public static final Logger log = Logger.getLogger("name");
 
 	@RequestMapping("/index")
 	public String index(Map<String, List<Book>> m) {

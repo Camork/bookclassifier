@@ -329,6 +329,10 @@
     font-size: 40px;
 }
 
-/*#left_order a{*/
-    /*color: white;*/
-/*}*/
+#bookPop .card-content a{
+    color: #000;
+}
+
+#bookPop .card .card-content {
+    padding: 12px;
+}

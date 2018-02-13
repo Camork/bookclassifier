@@ -7,23 +7,27 @@
     </insert>
 
     <insert id="insertBook" parameterType="cn.camork.crawler.Book">
-        INSERT IGNORE INTO b_books (book_id, type_name, book_name, book_price, book_author, book_publisher, book_pic, book_pubdate, book_describe)
-        VALUES (#{bookId}, #{typeName}, #{bookName}, #{bookPrice}, #{bookAuthor}, #{publisher}, #{bookPic}, #{pubDate}, #{bookDescribe})
+        INSERT IGNORE INTO b_books (book_id, type_name, book_name, book_price, book_author, book_publisher,
+                                    book_pic, book_addDate, book_pubdate, book_describe)
+        VALUES (#{bookId}, #{typeName}, #{bookName}, #{bookPrice}, #{bookAuthor}, #{publisher},
+                #{bookPic}, #{addDate}, #{pubDate}, #{bookDescribe})
     </insert>
 
-    <select id="getHotBooks" resultType="BookBean">
+    <select id="getHotBooks" resultType="cn.camork.crawler.Book">
         SELECT
         book_id bookId,
         type_name typeName,
         book_name bookName,
         book_price bookPrice,
         book_author bookAuthor,
+        book_addDate addDate,
+        book_pubdate pubDate,
         book_publisher publisher,
         book_pic bookPic,
         book_describe bookDescribe
         FROM b_books
         WHERE type_name = "book.douban.com"
-        ORDER BY book_pubdate DESC
+        ORDER BY book_addDate DESC
         LIMIT 24
     </select>
 
@@ -36,19 +40,20 @@
         WHERE type_title != ''
     </select>
 
-    <select id="getBooksByType" resultType="BookBean">
+    <select id="getBooksByType" resultType="cn.camork.crawler.Book">
         SELECT
         book_id bookId,
         type_name typeName,
         book_name bookName,
         book_price bookPrice,
         book_author bookAuthor,
+        book_addDate addDate,
         book_publisher publisher,
         book_pic bookPic,
         book_describe bookDescribe
         FROM b_books
         WHERE type_name = #{0}
-        ORDER BY book_pubdate DESC
+        ORDER BY book_addDate DESC
         LIMIT 9
     </select>
 

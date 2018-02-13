@@ -107,10 +107,7 @@ public class UserAction {
 
 	@ResponseBody
 	@RequestMapping("/checkUserName")
-	public Map<String, Boolean> checkUserName(@RequestParam String userName) throws Exception {
-
-		Index.log.warn(userName);
-
+	public Map<String, Boolean> checkUserName(@RequestParam String userName) {
 		boolean available = userService.checkUserName(userName);
 		Map<String, Boolean> m = new HashMap<>();
 

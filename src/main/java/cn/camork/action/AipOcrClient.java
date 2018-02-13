@@ -5,7 +5,6 @@ import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
 
 import java.io.InputStream;
-import java.util.HashMap;
 
 /**
  * Created by liferay on 2017/12/14.
@@ -32,7 +31,11 @@ public class AipOcrClient {
 	}
 
 	public static JSONObject webImageOCR(InputStream inputStream) throws Exception {
-		return getInstance().webImage(IOUtils.toByteArray(inputStream), new HashMap<>());
+		return getInstance().webImage(IOUtils.toByteArray(inputStream), null);
+	}
+
+	public static JSONObject webImageOCR(String url) throws Exception {
+		return getInstance().webImageUrl(url, null);
 	}
 
 }

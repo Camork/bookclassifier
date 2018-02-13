@@ -1,9 +1,8 @@
 package cn.camork.service.impl;
 
 
-import cn.camork.mapper.BookMapper;
 import cn.camork.crawler.Book;
-import cn.camork.model.BookBean;
+import cn.camork.mapper.BookMapper;
 import cn.camork.model.BookType;
 import cn.camork.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +39,7 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public List<BookBean> getBooksByType(String typeName) {
+	public List<Book> getBooksByType(String typeName) {
 		return bookMapper.getBooksByType(typeName);
 	}
 

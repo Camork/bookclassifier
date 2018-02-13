@@ -8,8 +8,7 @@
 
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/materialize.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/styles.css">
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/ripple.css">
-<script src="<%=request.getContextPath()%>/js/jquery-3.2.1.js"></script>
-<script src="<%=request.getContextPath()%>/js/materialize.js"></script>
-<script src="<%=request.getContextPath()%>/js/site.js"></script>
-<script src="<%=request.getContextPath()%>/js/cart.js"></script>
+<script src="<%=request.getContextPath()%>/js/jquery-3.2.1.js" charset="utf-8"></script>
+<script src="<%=request.getContextPath()%>/js/materialize.js" charset="utf-8"></script>
+<script src="<%=request.getContextPath()%>/js/site.js" charset="utf-8"></script>
+<script src="<%=request.getContextPath()%>/js/cart.js" charset="utf-8"></script>
