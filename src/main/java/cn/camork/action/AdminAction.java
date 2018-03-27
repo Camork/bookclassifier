@@ -60,27 +60,28 @@ public class AdminAction {
 		if (recognize != null) {
 			List<String> arrayList = recognize.getTexts();
 
-			for (String text : arrayList) {
-				if (text.contains("ISBN") || text.contains("isbn")) {
-					arrayList = new ArrayList<>();
+			String ISBNWord = recognize.getTexts().stream()
+					.map(
+							word -> Pattern.compile("\\D").matcher(word).replaceAll("").trim()
+					).filter(
+							word -> word.length() == 10 || word.length() == 13
+					).findFirst(
 
-					text = Pattern.compile("\\D").matcher(text).replaceAll("").trim();
+					).orElse(
+							null
+					);
 
-					int length = text.length();
-					if (length == 10 || length == 13) {
-						BarcodeDispose barcode = new BarcodeDispose(text);
-						barcode.putBook();
-					}
-					else {
-						m.put("msg", "ISBN号长度不正确:" + text);
-					}
-				}
+			if (ISBNWord != null) {
+				arrayList = new ArrayList<>();
+
+				BarcodeDispose barcode = new BarcodeDispose(ISBNWord);
+				barcode.putBook();
 			}
 
-			String[] urls=new String[arrayList.size()];
+			String[] urls = new String[arrayList.size()];
 
-			for(int i=0;i<arrayList.size();i++){
-				urls[i]="https://api.douban.com/v2/book/search?q="+arrayList.get(i).replace(" ","%20");
+			for (int i = 0; i < arrayList.size(); i++) {
+				urls[i] = "https://api.douban.com/v2/book/search?q=" + arrayList.get(i).replace(" ", "%20");
 			}
 
 			CoreUtils.log.debug(arrayList);
@@ -97,7 +98,7 @@ public class AdminAction {
 			m.put("msg", "输入数据为空或错误");
 		}
 
-		if(m.isEmpty()){
+		if (m.isEmpty()) {
 			m.put("msg", "识别成功,请手动选择");
 		}
 		CoreUtils.log.debug(CoreUtils.bookList);
@@ -172,7 +173,6 @@ public class AdminAction {
 			e.printStackTrace();
 			m.put("state", "fail");
 		}
-
 
 
 		return m;

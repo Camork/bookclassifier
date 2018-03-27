@@ -8,7 +8,7 @@
         <div>
             url链接和图片上传二选其一
 
-            <form id="uploadForm">
+            <form id="uploadForm" enctype="multipart/form-data">
                 <div class="input-field">
                     <input id="imageUrl" type="text" name="imageUrl"/>
                     <label for="imageUrl">请输入网络图片url</label>

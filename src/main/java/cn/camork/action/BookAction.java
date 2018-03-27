@@ -77,11 +77,11 @@ public class BookAction {
 	@RequestMapping("/addBook")
 	@ResponseBody
 	public Map<String, String> addBook(String id) {
-		Map<String, String> m=new HashMap<>();
+		Map<String, String> m = new HashMap<>();
 		for (BookBean bean : CoreUtils.bookList) {
 			if (bean.getId().equals(id)) {
 				Book book = new Book();
-				Object[] data = CoreUtils.infoDispose(new String[]{bean.getPubdate(), bean.getPrice()});
+				Object[] data = CoreUtils.getDateAndPrice(new String[]{bean.getPubdate(), bean.getPrice()});
 
 				book.setAddDate(new Date());
 				book.setPubDate((Date) data[0]);
@@ -93,38 +93,41 @@ public class BookAction {
 				book.setBookName(bean.getTitle());
 				book.setBookPic(bean.getImages().get("large"));
 
-				BookType[] array = bookService.getBookTypes().toArray(new BookType[0]);
-				List<Map<String, String>> tags = bean.getTags();
-				String[] tagArray = new String[tags.size()];
+				BookType[] existedTypes = bookService.getBookTypes().toArray(new BookType[0]);
 
-				String typeName=null;
-				for (int i = 0; i < tags.size(); i++)
-					tagArray[i] = tags.get(i).get("name");
+				String[] tagArray = bean.getTags().stream().map(
+						item -> item.get("name")
+				).toArray(
+						String[]::new
+				);
 
-				for(String tag:tagArray){
-					for(BookType existedTag:array){
-						if(tag.equals(existedTag.getTypeName())){
-							typeName=existedTag.getTypeName();
+				String typeName = null;
+
+				for (String tag : tagArray) {
+					for (BookType existedTag : existedTypes) {
+						if (tag.equals(existedTag.getTypeName())) {
+							typeName = existedTag.getTypeName();
 							break;
 						}
 					}
 				}
-				if(typeName==null){
-					typeName="book.douban.com";
+				if (typeName == null) {
+					typeName = "book.douban.com";
 				}
 
 				book.setTypeName(typeName);
 
 				bookService.insertBook(book);
 
-				if(typeName.equals("book.douban.com")){
-					typeName="首页";
+				if (typeName.equals("book.douban.com")) {
+					typeName = "首页";
 				}
-				m.put("msg","成功添加到"+typeName+"目录");
+
+				m.put("msg", "成功添加到" + typeName + "目录");
 				return m;
 			}
 		}
-		m.put("msg","添加失败");
+		m.put("msg", "添加失败");
 		return m;
 	}
 

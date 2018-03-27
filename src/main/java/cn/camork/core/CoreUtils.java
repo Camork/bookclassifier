@@ -37,14 +37,15 @@ public class CoreUtils {
 			else if (!filePart.isEmpty()) {
 				return new PicDispose(filePart);
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			return null;
 		}
 
 		return null;
 	}
 
-	public static List<String> getOcrData(InputStream inputStream,String url) throws Exception {
+	public static List<String> getOcrData(InputStream inputStream, String url) throws Exception {
 		List<String> arrayList = new ArrayList<>();
 
 		JSONObject jsonObject;
@@ -64,17 +65,18 @@ public class CoreUtils {
 				JSONObject item = jsonArray.getJSONObject(i);
 				arrayList.add(item.getString("words"));
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			arrayList.add(jsonObject.getString("error_msg"));
 		}
 
 		return arrayList;
 	}
 
-	public static Object[] infoDispose(String[] data){
-		Object[] newData=new Object[2];
+	public static Object[] getDateAndPrice(String[] data) {
+		Object[] newData = new Object[2];
 		String tempDate = data[0];
-		String tempPrice=data[1];
+		String tempPrice = data[1];
 		try {
 			SimpleDateFormat format = new SimpleDateFormat();
 			if (tempDate.length() == 4) {
@@ -89,17 +91,17 @@ public class CoreUtils {
 					format = new SimpleDateFormat("yyyy-MM-dd");
 				}
 			}
-			newData[0]=format.parse(tempDate);
+			newData[0] = format.parse(tempDate);
 		}
 		catch (ParseException e) {
-			newData[0]=new Date();
+			newData[0] = new Date();
 		}
 
 		if (tempPrice.equals("")) {
-			newData[1]=50.0f;
+			newData[1] = 50.0f;
 		}
 		else {
-			newData[1]=Float.parseFloat(tempPrice.replaceAll("[^.\\d]", ""));
+			newData[1] = Float.parseFloat(tempPrice.replaceAll("[^.\\d]", ""));
 		}
 
 		return newData;

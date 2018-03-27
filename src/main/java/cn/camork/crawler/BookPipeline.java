@@ -26,7 +26,7 @@ public class BookPipeline implements Pipeline<Book> {
 	@Override
 	public void process(Book bean) {
 
-		Object[] data = CoreUtils.infoDispose(new String[]{bean.getTempDate(), bean.getTempPrice()});
+		Object[] data = CoreUtils.getDateAndPrice(new String[]{bean.getTempDate(), bean.getTempPrice()});
 
 		bean.setAddDate(new Date());
 		bean.setPubDate((Date) data[0]);
