@@ -1,6 +1,7 @@
 package cn.camork.service.impl;
 
 
+import cn.camork.crawler.Book;
 import cn.camork.mapper.OrderMapper;
 import cn.camork.model.Order;
 import cn.camork.model.OrderDetail;
@@ -49,20 +50,22 @@ public class OrderServiceImpl implements OrderService {
 	public void changeOrderStatus(String orderId, int status) {
 		Map<String, String> m = new HashMap<>();
 		m.put("orderId", orderId);
-		orderMapper.updateOrderStatus(orderId, status);
+		orderMapper.changeOrderStatus(orderId, status);
 	}
 
 	@Override
 	public List<Order> getMyOrders(String username, String status) {
-		List<Order> orderList = orderMapper.getMyOrders(username, status);
-		return orderList;
+		return orderMapper.getMyOrders(username, status);
+	}
+
+	@Override
+	public List<Book> getOrderById(int orderId) {
+		return orderMapper.getOrderById(orderId);
 	}
 
 	@Override
 	public int getOrderStatusById(String orderId) {
-		// TODO Auto-generated method stub
-		int status = orderMapper.findOrderStatusById(Integer.parseInt(orderId));
-		return status;
+		return orderMapper.getOrderStatusById(Integer.parseInt(orderId));
 	}
 
 	@Override

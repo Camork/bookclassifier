@@ -103,9 +103,10 @@
                         <table>
                             <tr>
                                 <td>
-                                    <button class="light-blue darken-3 waves-effect waves-light btn" id="back" type="button">
-                                        查看订单详情
-                                    </button>
+                                    <a class="light-blue darken-3 waves-effect waves-light btn" id="back" type="button"
+                                            href="<%=request.getContextPath()%>/order/outPutExcel?id=${o.orderId}">
+                                        导出列表到Excel
+                                    </a>
                                 </td>
                                 <td class="right red-text">总金额:${o.totalAmount}元</td>
                             </tr>

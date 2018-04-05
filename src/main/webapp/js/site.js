@@ -186,3 +186,13 @@ function addBook(id) {
 
         });
 }
+
+function outPutExcel(id) {
+    $.post(getContextPath() + "/order/outPutExcel",
+        {
+            id: id
+        }, function (result) {
+            Materialize.toast(result.msg, 4000);
+            $('#loaderModal').modal('close');
+        });
+}

@@ -1,6 +1,7 @@
 package cn.camork.service;
 
 
+import cn.camork.crawler.Book;
 import cn.camork.model.Order;
 import cn.camork.model.OrderDetail;
 
@@ -13,6 +14,8 @@ public interface OrderService {
 	void changeOrderStatus(String orderId, int orderPaid);
 
 	List<Order> getMyOrders(String username, String status);
+
+	List<Book> getOrderById(int orderId);
 
 	int getOrderStatusById(String orderId);
 

@@ -4,6 +4,7 @@ import com.geccocrawler.gecco.annotation.Gecco;
 import com.geccocrawler.gecco.annotation.JSONPath;
 import com.geccocrawler.gecco.annotation.RequestParameter;
 import com.geccocrawler.gecco.spider.JsonBean;
+import com.wuwenze.poi.annotation.ExportConfig;
 
 import java.util.Date;
 
@@ -15,23 +16,28 @@ import java.util.Date;
 @Gecco(matchUrl = "https://api.douban.com/v2/book/{bookId}?bookType={typeName}", pipelines = {"consolePipeline", "bookPipeline"})
 public class Book implements JsonBean {
 
+	@ExportConfig(value = "id",width = 80)
 	@RequestParameter
 	private int bookId;
 
 	@RequestParameter
 	private String typeName;
 
+	@ExportConfig(value = "名称",width = 300)
 	@JSONPath("$.title")
 	private String bookName;
 
+	@ExportConfig(value = "价格",width = 50)
 	private Float bookPrice;
 
 	@JSONPath("$.price")
 	private String tempPrice;
 
+	@ExportConfig(value = "作者",width = 150)
 	@JSONPath("$.author[0]")
 	private String bookAuthor;
 
+	@ExportConfig(value = "出版社",width = 200)
 	@JSONPath("$.publisher")
 	private String publisher;
 
@@ -43,8 +49,10 @@ public class Book implements JsonBean {
 
 	private Date addDate;
 
+	@ExportConfig(value = "出版日期",width = 250)
 	private Date pubDate;
 
+	@ExportConfig("描述")
 	@JSONPath("$.summary")
 	private String bookDescribe;
 

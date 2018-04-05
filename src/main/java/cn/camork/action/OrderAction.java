@@ -1,10 +1,12 @@
 package cn.camork.action;
 
+import cn.camork.crawler.Book;
 import cn.camork.model.JsonOrder;
 import cn.camork.model.Order;
 import cn.camork.model.OrderDetail;
 import cn.camork.service.OrderService;
 import com.alibaba.fastjson.JSON;
+import com.wuwenze.poi.ExcelKit;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 /**
@@ -57,10 +60,16 @@ public class OrderAction {
 	}
 
 	@RequestMapping("/getMyOrders")
-	public String getMyOrders(@RequestParam(required = false) String status, Map<String, List<Order>> m) {
+	public String getMyOrders(String status, Map<String, List<Order>> m) {
 		List<Order> orders = orderService.getMyOrders((String) SecurityUtils.getSubject().getPrincipal(), status);
 		m.put("orders", orders);
 		return "/user/userCenter";
+	}
+
+	@RequestMapping("/outPutExcel")
+	public void outPutExcel(int id,HttpServletResponse response) throws Exception {
+		List<Book> details = orderService.getOrderById(id);
+		ExcelKit.$Export(Book.class, response).toExcel(details, "导出图书");
 	}
 
 	@ResponseBody

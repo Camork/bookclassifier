@@ -1,6 +1,7 @@
 package cn.camork.mapper;
 
 
+import cn.camork.crawler.Book;
 import cn.camork.model.Order;
 import cn.camork.model.OrderDetail;
 
@@ -14,11 +15,14 @@ public interface OrderMapper {
 
 	int getOrderId(String orderCode);
 
-	void updateOrderStatus(String orderId, int status);
+	void changeOrderStatus(String orderId, int status);
 
 	List<Order> getMyOrders(String username, String status);
 
-	int findOrderStatusById(int parseInt);
+	List<Book> getOrderById(int orderId);
+
+	int getOrderStatusById(int parseInt);
 
 	void delOrder(int orderId);
+
 }

@@ -17,7 +17,7 @@
         WHERE order_code = #{0}
     </select>
 
-    <update id="updateOrderStatus">
+    <update id="changeOrderStatus">
         UPDATE b_orders
         SET order_status = #{param2}
         WHERE order_id = #{param1}
@@ -72,7 +72,26 @@
         order by order_code desc
     </select>
 
-    <select id="findOrderStatusById" parameterType="int" resultType="int">
+    <select id="getOrderById" parameterType="int" resultType="cn.camork.crawler.Book">
+        SELECT
+            book_id bookId,
+            type_name typeName,
+            book_name bookName,
+            book_price bookPrice,
+            book_author bookAuthor,
+            book_addDate addDate,
+            book_pubdate pubDate,
+            book_publisher publisher,
+            book_pic bookPic,
+            book_describe bookDescribe
+        FROM b_books
+        HAVING book_id in
+               (SELECT book_id
+                FROM b_orderdetail
+                WHERE order_id = #{orderId})
+    </select>
+
+    <select id="getOrderStatusById" parameterType="int" resultType="OrderDetail">
         SELECT order_status
         FROM b_orders
         WHERE order_id = #{orderId}

@@ -27,19 +27,4 @@ public class Index {
 		return "home";
 	}
 
-
-	@RequestMapping("/test")
-	public String test(Map<String, List<Book>> m) {
-		List<Book> hotBooks = bookService.getHotBooks();
-		m.put("hotBooks", hotBooks);
-		return "page/test";
-	}
-
-	@RequestMapping("/order")
-	public String order(Map<String, List<Book>> m) {
-
-		return "page/order";
-	}
-
-
 }
