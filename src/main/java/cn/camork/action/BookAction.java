@@ -78,7 +78,7 @@ public class BookAction {
 	@ResponseBody
 	public Map<String, String> addBook(String id) {
 		Map<String, String> m = new HashMap<>();
-		for (BookBean bean : CoreUtils.bookList) {
+		for (BookBean bean : CoreUtils.BOOK_LIST) {
 			if (bean.getId().equals(id)) {
 				Book book = new Book();
 				Object[] data = CoreUtils.getDateAndPrice(new String[]{bean.getPubdate(), bean.getPrice()});

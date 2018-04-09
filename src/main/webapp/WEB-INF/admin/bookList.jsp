@@ -11,12 +11,12 @@
 
 <div class="bookContent" style="top: 20%;">
     <div class="row ">
-        <c:forEach items="${CoreUtils.bookList}" var="b" varStatus="vs">
+        <c:forEach items="${CoreUtils.BOOK_LIST}" var="b" varStatus="vs">
             <c:if test="${vs.count<=6}">
                 <div class="col s6 m3 l2">
                     <div class="card">
                         <div class="card-image">
-                            <img src="${b.images.get('large')}">
+                            <img src="${b.images.get('large')}" alt="placeholder" crossorigin="anonymous">
                             <a class="btn-floating halfway-fab waves-effect waves-light red"><i
                                     class="material-icons" onclick="addBook('${b.id}')">check</i></a>
                         </div>
@@ -36,7 +36,7 @@
     </div>
 
     <div class="row ">
-        <c:forEach items="${CoreUtils.bookList}" var="b" varStatus="vs">
+        <c:forEach items="${CoreUtils.BOOK_LIST}" var="b" varStatus="vs">
             <c:if test="${vs.count>6 && vs.count<=12}">
                 <div class="col s6 m3 l2">
                     <div class="card">
@@ -61,7 +61,7 @@
     </div>
 
     <div class="row ">
-        <c:forEach items="${CoreUtils.bookList}" var="b" varStatus="vs">
+        <c:forEach items="${CoreUtils.BOOK_LIST}" var="b" varStatus="vs">
             <c:if test="${vs.count>12}">
                 <div class="col s6 m3 l2">
                     <div class="card">

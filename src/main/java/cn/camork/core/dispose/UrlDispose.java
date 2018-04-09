@@ -2,8 +2,10 @@ package cn.camork.core.dispose;
 
 import cn.camork.core.CoreUtils;
 import cn.camork.core.IRecognize;
+import cn.camork.core.ISearch;
+import cn.camork.core.search.NameSearch;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * Created by camork on 24/12/2017.
@@ -11,22 +13,22 @@ import java.util.List;
 public class UrlDispose implements IRecognize {
 
 	private String urlStr;
-	private List<String> arrayList;
 
 	public UrlDispose(String urlStr) {
 		this.urlStr = urlStr;
 	}
 
 	@Override
-	public List<String> getTexts() {
-
+	public ISearch dispose() {
 		try {
-			arrayList = CoreUtils.getOcrData(null,urlStr);
+			Set<String> arraySet = CoreUtils.getOcrData(null, urlStr);
+
+			CoreUtils.POSSIBLE_NAMES.addAll(arraySet);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return arrayList;
+		return new NameSearch();
 	}
 }

@@ -12,7 +12,8 @@ public class SimilarPipeline implements Pipeline<SimilarSearchSpider> {
 	@Override
 	public void process(SimilarSearchSpider bean) {
 		for(JSONObject object:bean.getBooks()){
-			CoreUtils.bookList.add(object.toJavaObject(BookBean.class));
+			CoreUtils.BOOK_LIST.add(object.toJavaObject(BookBean.class));
 		}
 	}
+
 }

@@ -4,8 +4,7 @@
  */
 
 $(function () {
-
-    // $(".legitRipple").ripple({maxDiameter: "120%"});
+    $('select').material_select();
 
     $('.modal').modal({
         opacity: .5, // Opacity of modal background
@@ -155,7 +154,11 @@ function getTag(typeName) {
 }
 
 function bookApi() {
+    var index=$("select").get(0).selectedIndex;//索引
+
     var formData = new FormData($("#uploadForm")[0]);
+    formData.append('index', index);
+
     $.ajax({
         url: getContextPath() + "/admin/bookApi",
         type: 'POST',
@@ -181,18 +184,14 @@ function addBook(id) {
         {
             id: id
         }, function (result) {
-                Materialize.toast(result.msg, 4000);
-                $('#loaderModal').modal('close');
-
-        });
-}
-
-function outPutExcel(id) {
-    $.post(getContextPath() + "/order/outPutExcel",
-        {
-            id: id
-        }, function (result) {
             Materialize.toast(result.msg, 4000);
             $('#loaderModal').modal('close');
         });
+}
+
+function changeContent(value) {
+    $('.select_content').attr('hidden', 'hidden');
+
+    var selectedOption = value.options[value.options.selectedIndex].value;
+    $('#' + selectedOption).removeAttr('hidden');
 }

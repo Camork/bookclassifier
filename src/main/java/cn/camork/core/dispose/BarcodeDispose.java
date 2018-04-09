@@ -1,18 +1,14 @@
 package cn.camork.core.dispose;
 
 import cn.camork.core.CoreUtils;
-import cn.camork.model.BookBean;
-import com.alibaba.fastjson.JSON;
-import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
+import cn.camork.core.IRecognize;
+import cn.camork.core.ISearch;
+import cn.camork.core.search.ISBNSearch;
 
 /**
  * Created by camork on 24/12/2017.
  */
-public class BarcodeDispose{
+public class BarcodeDispose implements IRecognize {
 
 	private String isbnStr;
 
@@ -20,24 +16,11 @@ public class BarcodeDispose{
 		this.isbnStr = isbnStr;
 	}
 
-	public void putBook() {
-		HttpGet get = new HttpGet("https://api.douban.com/v2/book/isbn/"+isbnStr);
+	@Override
+	public ISearch dispose() {
 
-		CloseableHttpResponse response;
+		CoreUtils.POSSIBLE_NAMES.add(isbnStr);
 
-		try {
-			response = HttpClients.createDefault().execute(get);
-			HttpEntity entity = response.getEntity();
-			String content = EntityUtils.toString(entity, "utf-8");
-			response.close();
-			System.out.println(content);
-
-			BookBean book= JSON.parseObject(content,BookBean.class);
-
-			CoreUtils.bookList.add(book);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
+		return new ISBNSearch();
 	}
 }

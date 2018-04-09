@@ -2,7 +2,7 @@ package cn.camork.action;
 
 import cn.camork.core.CoreUtils;
 import cn.camork.core.IRecognize;
-import cn.camork.core.dispose.BarcodeDispose;
+import cn.camork.core.ISearch;
 import cn.camork.model.Order;
 import cn.camork.service.OrderService;
 import com.geccocrawler.gecco.GeccoEngine;
@@ -15,11 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 /**
  * Created by Camork on 2017-05-26.
@@ -29,7 +27,7 @@ import java.util.regex.Pattern;
 public class AdminAction {
 
 	@Autowired
-	private PipelineFactory springPipelineFactory;
+	public PipelineFactory springPipelineFactory;
 
 	@Autowired
 	private OrderService orderService;
@@ -51,48 +49,17 @@ public class AdminAction {
 	@ResponseBody
 	@RequestMapping("/bookApi")
 	public Map<String, String> bookApi(MultipartHttpServletRequest request) {
-		CoreUtils.bookList.clear();
+		CoreUtils.BOOK_LIST.clear();
+		CoreUtils.POSSIBLE_NAMES.clear();
 
 		Map<String, String> m = new HashMap<>();
 
 		IRecognize recognize = CoreUtils.getRecognize(request);
 
 		if (recognize != null) {
-			List<String> arrayList = recognize.getTexts();
+			ISearch searcher = recognize.dispose();
 
-			String ISBNWord = recognize.getTexts().stream()
-					.map(
-							word -> Pattern.compile("\\D").matcher(word).replaceAll("").trim()
-					).filter(
-							word -> word.length() == 10 || word.length() == 13
-					).findFirst(
-
-					).orElse(
-							null
-					);
-
-			if (ISBNWord != null) {
-				arrayList = new ArrayList<>();
-
-				BarcodeDispose barcode = new BarcodeDispose(ISBNWord);
-				barcode.putBook();
-			}
-
-			String[] urls = new String[arrayList.size()];
-
-			for (int i = 0; i < arrayList.size(); i++) {
-				urls[i] = "https://api.douban.com/v2/book/search?q=" + arrayList.get(i).replace(" ", "%20");
-			}
-
-			CoreUtils.log.debug(arrayList);
-
-			GeccoEngine.create()
-					.classpath("cn.camork.crawler.search")
-					.pipelineFactory(springPipelineFactory)
-					.start(urls)
-					.thread(4)
-					.run();
-
+			searcher.search(springPipelineFactory);
 		}
 		else {
 			m.put("msg", "输入数据为空或错误");
@@ -101,7 +68,7 @@ public class AdminAction {
 		if (m.isEmpty()) {
 			m.put("msg", "识别成功,请手动选择");
 		}
-		CoreUtils.log.debug(CoreUtils.bookList);
+		CoreUtils.log.debug(CoreUtils.BOOK_LIST);
 
 		return m;
 	}

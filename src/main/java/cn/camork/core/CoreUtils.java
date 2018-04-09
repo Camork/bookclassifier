@@ -1,6 +1,8 @@
 package cn.camork.core;
 
 import cn.camork.action.AipOcrClient;
+import cn.camork.core.dispose.BarcodeDispose;
+import cn.camork.core.dispose.NameDispose;
 import cn.camork.core.dispose.PicDispose;
 import cn.camork.core.dispose.UrlDispose;
 import cn.camork.model.BookBean;
@@ -20,22 +22,29 @@ import java.util.*;
  */
 public class CoreUtils {
 
-	public static Set<BookBean> bookList = new LinkedHashSet<>();
+	public static Set<BookBean> BOOK_LIST = new LinkedHashSet<>();
+	public static Set<String> POSSIBLE_NAMES = new HashSet<>();
 
 	public static final Logger log = Logger.getLogger("mylogger");
 
 	public static IRecognize getRecognize(MultipartHttpServletRequest request) {
 
 		try {
-			String imageUrl = request.getParameterMap().get("imageUrl")[0];
+			Map<String, String[]> parameterMap = request.getParameterMap();
 
-			MultipartFile filePart = request.getFile("imageFile");
+			int index = Integer.parseInt(parameterMap.get("index")[0]);
 
-			if (imageUrl != null && imageUrl.length() != 0) {
-				return new UrlDispose(imageUrl);
-			}
-			else if (!filePart.isEmpty()) {
-				return new PicDispose(filePart);
+			switch (index) {
+				case 1:
+					return new UrlDispose(parameterMap.get("imageUrl")[0]);
+				case 2:
+					MultipartFile filePart = request.getFile("imageFile");
+
+					return new PicDispose(filePart);
+				case 3:
+					return new NameDispose(parameterMap.get("bookName")[0]);
+				case 4:
+					return new BarcodeDispose(parameterMap.get("bookISBN")[0]);
 			}
 		}
 		catch (Exception e) {
@@ -45,8 +54,8 @@ public class CoreUtils {
 		return null;
 	}
 
-	public static List<String> getOcrData(InputStream inputStream, String url) throws Exception {
-		List<String> arrayList = new ArrayList<>();
+	public static Set<String> getOcrData(InputStream inputStream, String url) throws Exception {
+		Set<String> hashSet = new HashSet<>();
 
 		JSONObject jsonObject;
 
@@ -63,14 +72,14 @@ public class CoreUtils {
 			CoreUtils.log.debug(jsonArray);
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject item = jsonArray.getJSONObject(i);
-				arrayList.add(item.getString("words"));
+				hashSet.add(item.getString("words"));
 			}
 		}
 		catch (Exception e) {
-			arrayList.add(jsonObject.getString("error_msg"));
+			hashSet.add(jsonObject.getString("error_msg"));
 		}
 
-		return arrayList;
+		return hashSet;
 	}
 
 	public static Object[] getDateAndPrice(String[] data) {
