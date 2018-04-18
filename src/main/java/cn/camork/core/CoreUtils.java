@@ -1,6 +1,5 @@
 package cn.camork.core;
 
-import cn.camork.action.AipOcrClient;
 import cn.camork.core.dispose.BarcodeDispose;
 import cn.camork.core.dispose.NameDispose;
 import cn.camork.core.dispose.PicDispose;
@@ -22,8 +21,11 @@ import java.util.*;
  */
 public class CoreUtils {
 
-	public static Set<BookBean> BOOK_LIST = new LinkedHashSet<>();
 	public static Set<String> POSSIBLE_NAMES = new HashSet<>();
+
+	public static Set<String> ERROR_NAMES = new HashSet<>();
+
+	public static Set<BookBean> BOOK_LIST = new LinkedHashSet<>();
 
 	public static final Logger log = Logger.getLogger("mylogger");
 
@@ -69,14 +71,13 @@ public class CoreUtils {
 		try {
 			JSONArray jsonArray = jsonObject.getJSONArray("words_result");
 
-			CoreUtils.log.debug(jsonArray);
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject item = jsonArray.getJSONObject(i);
 				hashSet.add(item.getString("words"));
 			}
 		}
 		catch (Exception e) {
-			hashSet.add(jsonObject.getString("error_msg"));
+			ERROR_NAMES.add(jsonObject.getString("error_msg"));
 		}
 
 		return hashSet;

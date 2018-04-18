@@ -8,6 +8,7 @@ import cn.camork.service.OrderService;
 import com.geccocrawler.gecco.GeccoEngine;
 import com.geccocrawler.gecco.pipeline.PipelineFactory;
 import com.geccocrawler.gecco.request.HttpGetRequest;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,15 +33,15 @@ public class AdminAction {
 	@Autowired
 	private OrderService orderService;
 
-	//@RequiresRoles("admin")
+	@RequiresRoles("admin")
 	@RequestMapping("adminCenter")
 	public String adminCenter() {
 		return "/admin/adminCenter";
 	}
 
-	//@RequiresRoles("admin")
+	@RequiresRoles("admin")
 	@RequestMapping("orderList")
-	public String adminCenter(@RequestParam(required = false) String status, Map<String, List<Order>> m) {
+	public String orderList(@RequestParam(required = false) String status, Map<String, List<Order>> m) {
 		List<Order> orders = orderService.getMyOrders(null, status);
 		m.put("orders", orders);
 		return "/admin/orderList";
@@ -51,6 +52,7 @@ public class AdminAction {
 	public Map<String, String> bookApi(MultipartHttpServletRequest request) {
 		CoreUtils.BOOK_LIST.clear();
 		CoreUtils.POSSIBLE_NAMES.clear();
+		CoreUtils.ERROR_NAMES.clear();
 
 		Map<String, String> m = new HashMap<>();
 
@@ -59,7 +61,17 @@ public class AdminAction {
 		if (recognize != null) {
 			ISearch searcher = recognize.dispose();
 
+			if(!CoreUtils.ERROR_NAMES.isEmpty()){
+				m.put("errorMsg", CoreUtils.ERROR_NAMES.toArray(new String[0])[0]);
+
+				return m;
+			}
+
 			searcher.search(springPipelineFactory);
+
+			if(CoreUtils.BOOK_LIST.isEmpty()){
+				m.put("errorMsg", "未能搜索到相关信息");
+			}
 		}
 		else {
 			m.put("msg", "输入数据为空或错误");
@@ -143,23 +155,6 @@ public class AdminAction {
 
 
 		return m;
-	}
-
-	@ResponseBody
-	@RequestMapping("/similarSearch")
-	public void similarSearch(String name) {
-		try {
-			GeccoEngine.create()
-					.classpath("cn.camork.crawler")
-					.pipelineFactory(springPipelineFactory)
-					.thread(3)
-					.start(new HttpGetRequest("https://api.douban.com/v2/book/search?q=" + name))
-					.run();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-
 	}
 
 }

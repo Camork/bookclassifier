@@ -43,5 +43,4 @@ public class BookServiceImpl implements BookService {
 		return bookMapper.getBooksByType(typeName);
 	}
 
-
 }

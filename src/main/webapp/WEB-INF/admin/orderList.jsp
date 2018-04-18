@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <html>
 <head>
-    <title>用户订单列表</title>
+    <title>用户收藏列表</title>
     <%@include file="../common/headSources.jsp" %>
 </head>
 <body>
@@ -12,57 +12,16 @@
 
 <div class="container">
     <div class="row">
-        <div class="col l2">
-            <div class="collection" id="left_order">
-                <a class="collection-item" href="${pageContext.request.contextPath}/admin/orderList">全部订单</a>
-                <a class="collection-item" href="${pageContext.request.contextPath}/admin/orderList?status=1">待发货订单</a>
-                <a class="collection-item" href="${pageContext.request.contextPath}/admin/orderList?status=2">已发货订单</a>
-                <a class="collection-item" href="${pageContext.request.contextPath}/admin/orderList?status=3">交易成功订单</a>
-                <a class="collection-item" href="${pageContext.request.contextPath}/admin/orderList?status=4">交易关闭订单</a>
-            </div>
-        </div>
 
-        <div class="col l10">
+        <div class="col l12">
             <c:forEach items="${orders}" var="o" varStatus="vs">
                 <div class="card-panel">
                     <div class="panel-heading">
-                        订单人:${o.userName}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        下单日期：<fmt:formatDate value="${o.orderDate}" type="date"/>
+                        用户:${o.userName}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        生成日期：<fmt:formatDate value="${o.orderDate}" type="date"/>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         订单号：<a>${o.orderCode}</a>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 订单状态： <span style="color: red" id="orderStatus">
-                        <c:if test="${o.orderStatus==1}">
-                            未发货
-                            <div class="right">
-                                <a class="btn white light-blue-text text-darken-3 waves-effect"
-                                   onclick="handleOrder(${o.orderId},2,'确定发货吗？',event)">发货</a>
-                            </div>
-                        </c:if>
-                        <c:if test="${o.orderStatus==2}">
-                            已发货
-                            <div class="right">
-                                <a class="btn white light-blue-text text-darken-3 waves-effect"
-                                   onclick="handleOrder(${o.orderId},4,'确定要取消订单吗？',event)">取消订单</a>
-                            </div>
-                        </c:if>
-                        <c:if test="${o.orderStatus==3}">
-                            交易成功
-                            <div class="right">
-                                <a class="btn white light-blue-text text-darken-3 waves-effect"
-                                   href="${pageContext.request.contextPath}/order/delOrder?orderId=${o.orderId}"
-                                   onclick="return confirm('确定要删除这个订单吗？')">删除订单</a>
-                            </div>
-                        </c:if>
-
-                         <c:if test="${o.orderStatus==4}">
-                             订单已取消
-                             <div class="right">
-                                 <a class="btn white light-blue-text text-darken-3 waves-effect"
-                                    href="${pageContext.request.contextPath}/order/delOrder?orderId=${o.orderId}"
-                                    onclick="return confirm('确定要删除这个订单吗？')">删除订单</a>
-                            </div>
-                         </c:if>
-                    </span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </div>
                     <div class="panel-body">
                         <table>
@@ -92,11 +51,12 @@
                         <table>
                             <tr>
                                 <td>
-                                    <button class="light-blue darken-3 waves-effect waves-light btn" id="back" type="button">
-                                        查看订单详情
-                                    </button>
+                                    <a class="btn waves-effect waves-light" id="back" type="button"
+                                       href="<%=request.getContextPath()%>/order/outPutExcel?id=${o.orderId}">
+                                        导出列表到Excel
+                                    </a>
                                 </td>
-                                <td class="right red-text">总金额:${o.totalAmount}元</td>
+                                <td class="right red-text">合计:${o.totalAmount}元</td>
                             </tr>
                         </table>
 
@@ -112,17 +72,7 @@
 </body>
 </html>
 <script>
-    $(".page-title").text("用户订单列表");
-    $(".page-title").text("我的订单");
-
-    function handleOrder(orderId, status, msg, e) {
-        if (confirm(msg)) {
-            var os = $(e.target).parent().parent("#orderStatus");
-            $.post(getContextPath() + "/order/handleOrderStatus", {orderId: orderId, status: status}, function (result) {
-
-            });
-        }
-    }
+    $(".page-title").text("用户收藏列表");
 </script>
 <style>
     #head_content {

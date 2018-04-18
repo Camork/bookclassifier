@@ -36,7 +36,7 @@ public class BookAction {
 		Map<String, List<BookType>> categories = new HashMap<>();
 		List<BookType> lists = bookService.getBookTypes();
 
-		List<BookType> data = new ArrayList<>();
+		List<BookType> data;
 		for (BookType bookType : lists) {
 
 			String title = bookType.getTypeTitle();

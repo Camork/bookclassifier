@@ -19,7 +19,7 @@
 <%@include file="../common/navTop.jsp" %>
 <%@include file="../common/preloader.jsp" %>
 
-<div class="container">
+<div class="container" style="margin-left: 40%">
     <div class="row" style="margin-top: 100px">
         根据类型更新数据:
         <div class="input-field">
@@ -30,7 +30,7 @@
         <a class="btn waves-effect waves-light" onclick="updateNewBook()">首页新书刷新</a>
     </div>
 
-    <button class="btn modal-trigger row" data-target="modalPop">图书识别接口</button>
+    <button class="btn modal-trigger row" data-target="modalPop">图书识别录入</button>
 
 </div>
 

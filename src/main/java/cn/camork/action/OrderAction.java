@@ -67,25 +67,25 @@ public class OrderAction {
 	}
 
 	@RequestMapping("/outPutExcel")
-	public void outPutExcel(int id,HttpServletResponse response) throws Exception {
+	public void outPutExcel(int id,HttpServletResponse response) {
 		List<Book> details = orderService.getOrderById(id);
 		ExcelKit.$Export(Book.class, response).toExcel(details, "导出图书");
 	}
 
-	@ResponseBody
-	@RequestMapping("/handleOrderStatus")
-	public Map<String, String> handleOrderStatus(@RequestParam String orderId, @RequestParam int status) {
-		Map<String, String> m = new HashMap<>();
-		try {
-			orderService.changeOrderStatus(orderId, status);
-			m.put("handle", "success");
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			m.put("handle", "exception");
-		}
-		return m;
-	}
+//	@ResponseBody
+//	@RequestMapping("/handleOrderStatus")
+//	public Map<String, String> handleOrderStatus(@RequestParam String orderId, @RequestParam int status) {
+//		Map<String, String> m = new HashMap<>();
+//		try {
+//			orderService.changeOrderStatus(orderId, status);
+//			m.put("handle", "success");
+//		}
+//		catch (Exception e) {
+//			e.printStackTrace();
+//			m.put("handle", "exception");
+//		}
+//		return m;
+//	}
 
 	@RequestMapping("/delOrder")
 	public String delOrder(int orderId) {

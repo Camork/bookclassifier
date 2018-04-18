@@ -22,7 +22,7 @@
         </div>
     </div>
     <div class="footer-copyright">
-        <div class="container">Copyright © 2016 - 2017 Camork. All Rights Reserved.</div>
+        <div class="container">Copyright © 2017 - 2018 Camork. All Rights Reserved.</div>
     </div>
 </footer>
 

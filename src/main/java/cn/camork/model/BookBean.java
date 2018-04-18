@@ -235,4 +235,12 @@ public class BookBean {
 	public int hashCode() {
 		return Objects.hash(image, title);
 	}
+
+	public boolean isEmpty(){
+		if(title==null && image==null){
+			return true;
+		}
+
+		return false;
+	}
 }

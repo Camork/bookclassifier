@@ -30,12 +30,8 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserAction {
 
-	private UserService userService;
-
 	@Autowired
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
+	private UserService userService;
 
 	@ResponseBody
 	@RequestMapping("/login")
@@ -59,7 +55,6 @@ public class UserAction {
 					array.add(ae.getMessage());
 				}
 				array.add("登录失败");
-				System.out.println("登录失败: " + ae.getMessage());
 			}
 		}
 

@@ -1,4 +1,4 @@
-package cn.camork.action;
+package cn.camork.core;
 
 import com.baidu.aip.ocr.AipOcr;
 import org.apache.commons.io.IOUtils;

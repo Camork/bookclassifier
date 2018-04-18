@@ -13,13 +13,13 @@
                             <li><a class="waves-effect waves-light">欢迎<shiro:principal/>登录</a></li>
                         </shiro:user>
                         <shiro:lacksRole name="admin">
-                            <li><a class="waves-effect waves-light" onclick="showCart(<%=SecurityUtils.getSubject().isAuthenticated()%>)">购物车列表</a></li>
-                            <li><a class="waves-effect waves-light" href="<%=request.getContextPath()%>/order/getMyOrders">订单列表</a></li>
+                            <li><a class="waves-effect waves-light" onclick="showCart(<%=SecurityUtils.getSubject().isAuthenticated()%>)">收藏夹</a></li>
+                            <li><a class="waves-effect waves-light" href="<%=request.getContextPath()%>/order/getMyOrders">收藏列表</a></li>
                         </shiro:lacksRole>
-                        <%--<shiro:hasRole name="admin">--%>
-                            <li><a class="waves-effect waves-light" href="<%=request.getContextPath()%>/admin/orderList">用户订单列表</a></li>
+                        <shiro:hasRole name="admin">
+                            <li><a class="waves-effect waves-light" href="<%=request.getContextPath()%>/admin/orderList">用户收藏列表</a></li>
                             <li><a class="waves-effect waves-light" href="<%=request.getContextPath()%>/admin/adminCenter">管理员后台</a></li>
-                        <%--</shiro:hasRole>--%>
+                        </shiro:hasRole>
                     </ul>
 
                 </div>
@@ -42,7 +42,7 @@
 
         <div id="faker_content" class="page">
             <div class="page-title-container">
-                <h1 class="page-title">图片列表</h1>
+                <h1 class="page-title">图书列表</h1>
             </div>
             <% if (a) {%>
             <a class="btn-floating btn-large halfway-fab waves-effect waves-light pink"
@@ -62,8 +62,8 @@
 <div id="cart" class="modal bottom-sheet">
     <div class="modal-content">
         <div class="row">
-            <h4 class="left">购物车列表</h4>
-            <a class="right btn btn-flat waves-effect waves-light" onclick="clearCart()">清空购物车</a>
+            <h4 class="left">收藏列表</h4>
+            <a class="right btn btn-flat waves-effect waves-light" onclick="clearCart()">清空收藏列表</a>
         </div>
 
         <ul class="collection table" style="background-color: #fff"></ul>

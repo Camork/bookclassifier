@@ -121,7 +121,7 @@ function updateType() {
 function updateBookByType() {
     $('#loaderModal').modal("open");
     var typeName = $('#xxx').val();
-    $.post(getContextPath() + "/admin/similarSearch",
+    $.post(getContextPath() + "/admin/updateBookByType",
         {
             name: typeName
         }, function (result) {
@@ -154,7 +154,7 @@ function getTag(typeName) {
 }
 
 function bookApi() {
-    var index=$("select").get(0).selectedIndex;//索引
+    var index=$("select").get(0).selectedIndex;
 
     var formData = new FormData($("#uploadForm")[0]);
     formData.append('index', index);
@@ -168,10 +168,17 @@ function bookApi() {
         contentType: false,
         processData: false,
         success: function (result) {
+            var errorMsg = result.errorMsg;
             var msg = result.msg;
-            Materialize.toast(msg, 4000);
-            $(".bookContainer").load(getContextPath() + "/admin/bookList");
-            $('#bookPop').modal('open');
+
+            if(errorMsg===undefined){
+                Materialize.toast(msg, 4000);
+                $(".bookContainer").load(getContextPath() + "/admin/bookList");
+                $('#bookPop').modal('open');
+            }else{
+                Materialize.toast(errorMsg, 4000);
+            }
+
         },
         error: function (result) {
             Materialize.toast('出现未知错误', 4000);

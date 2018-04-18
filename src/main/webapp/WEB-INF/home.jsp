@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>图书分类录入系统</title>
+    <title>智能图书信息录入系统</title>
     <%@include file="common/headSources.jsp" %>
     <link href="<%=request.getContextPath()%>/css/gallery-materialize.min.css" rel="stylesheet">
     <script src="<%=request.getContextPath()%>/js/gallery.min.js"></script>

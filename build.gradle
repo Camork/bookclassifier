@@ -3,7 +3,6 @@ apply plugin: 'war'
 apply plugin: 'idea'
 
 group 'cn.camork'
-version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -65,7 +64,7 @@ tasks.withType(JavaCompile) {
 
 idea {
     module {
-        //downloadJavadoc = true
+        downloadJavadoc = true
         downloadSources = true
     }
 }

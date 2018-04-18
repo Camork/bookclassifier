@@ -163,10 +163,11 @@ function showCart() {
             s += "<td><a href='#' onclick='delCart(" + i + ")'>删除</a></td></tr>";
         }
         s += "</tbody></table>";
-        $(".footer").html("<a id='commit' class='right btn waves-effect waves-light blue' onclick='addOrder()'>去结算</a><div class='right' style='margin: 10px;10px'>已选" + orderdetail.totalNumber + "件商品&nbsp;&nbsp;共" + orderdetail.totalAmount + "元</div>");
+        $(".footer").html("<a id='commit' class='right btn waves-effect waves-light blue'" +
+            " onclick='addOrder()'>提交</a><div class='right' style='margin: 10px;10px'>已选" + orderdetail.totalNumber + "件图书&nbsp;&nbsp;共" + orderdetail.totalAmount + "元</div>");
     } else {
         s += "<div class='tableTip'>列表为空</div>";
-        $(".footer").html("<a id='commit' class='right btn waves-effect waves-light blue' onclick='addOrder()'>去结算</a><div class='right' style='margin: 10px;10px'>已选" + orderdetail.totalNumber + "件商品&nbsp;&nbsp;共" + orderdetail.totalAmount + "元</div>");
+        $(".footer").html("<a id='commit' class='right btn waves-effect waves-light blue' onclick='addOrder()'>提交</a><div class='right' style='margin: 10px;10px'>已选" + orderdetail.totalNumber + "件商品&nbsp;&nbsp;共" + orderdetail.totalAmount + "元</div>");
         $("#commit").addClass("disabled");
     }
 

@@ -894,7 +894,7 @@ if (jQuery) {
         complete: undefined,
         dismissible: true,
         startingTop: '4%',
-        endingTop: '30%'
+        endingTop: '15%'
       };
 
       // Override defaults

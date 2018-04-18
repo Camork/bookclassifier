@@ -29,9 +29,13 @@ public class ISBNSearch implements ISearch{
 			String content = EntityUtils.toString(entity, "utf-8");
 			response.close();
 
+			CoreUtils.log.debug(content);
+
 			BookBean book= JSON.parseObject(content,BookBean.class);
 
-			CoreUtils.BOOK_LIST.add(book);
+			if(!book.isEmpty()){
+				CoreUtils.BOOK_LIST.add(book);
+			}
 		}
 		catch (Exception e) {
 			e.printStackTrace();

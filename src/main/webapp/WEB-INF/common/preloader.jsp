@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <div id="modalPop" class="modal">
-    <div class="modal-content" style="height: 300px">
+    <div class="modal-content" style="height: 320px">
         <h4>请选择导入类型</h4>
 
         <div>
@@ -52,15 +52,11 @@
     </div>
 </div>
 
-<div id="bookPop" class="modal" style="width: 70%">
+<div id="bookPop" class="modal" style="width: 70%;top: 15%">
     <div class="modal-content">
         <h4>请确定列表中可能的图书</h4>
 
         <div class="bookContainer">
         </div>
-    </div>
-
-    <div class="modal-footer">
-        <a class="modal-action modal-close waves-effect waves-green btn-flat" onclick="">Submit</a>
     </div>
 </div>
